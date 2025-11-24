@@ -329,7 +329,18 @@ pnpm add -w <package>  # Only for tools used by all workspaces
 
 ### Git Commit Guidelines
 
-**Format**:
+**When to Commit** (Proactive Approach):
+
+AI agents should **proactively suggest commits** at these milestones:
+- ✅ After completing a feature or major task
+- ✅ After creating/updating significant documentation
+- ✅ After fixing bugs or issues
+- ✅ Before switching to a different area of work
+- ✅ At natural breakpoints in development (e.g., schema changes, new routes, UI components)
+
+**Always ask the user before committing** - Suggest the commit, explain what will be included, and wait for confirmation.
+
+**Commit Message Format**:
 ```
 <type>: <brief description>
 
@@ -349,6 +360,8 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - `refactor`: Code refactoring
 - `test`: Adding tests
 - `chore`: Maintenance tasks
+- `style`: Code style changes (formatting, etc.)
+- `perf`: Performance improvements
 
 **Example**:
 ```bash
@@ -367,6 +380,13 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 EOF
 )"
 ```
+
+**Commit Best Practices**:
+- Keep commits focused and atomic
+- Write descriptive messages that explain the "why" not just the "what"
+- Group related changes together
+- Don't commit broken code
+- Run `pnpm type-check` before committing when possible
 
 ---
 
