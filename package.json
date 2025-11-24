@@ -1,0 +1,31 @@
+{
+  "name": "esthetically-clear",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Modern full-stack TypeScript application with TanStack Start, Hono, Prisma, and PostgreSQL",
+  "scripts": {
+    "dev": "pnpm --parallel --filter frontend --filter backend dev",
+    "build": "pnpm --recursive build",
+    "test": "pnpm --recursive test",
+    "lint": "pnpm --recursive lint",
+    "type-check": "pnpm --recursive type-check",
+    "clean": "pnpm --recursive clean && rm -rf node_modules"
+  },
+  "keywords": [
+    "tanstack",
+    "hono",
+    "prisma",
+    "postgresql",
+    "typescript",
+    "monorepo"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.12.3",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

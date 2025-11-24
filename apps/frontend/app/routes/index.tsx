@@ -1,0 +1,20 @@
+import { createFileRoute } from '@tanstack/react-router';
+
+export const Route = createFileRoute('/')({
+  component: HomeComponent,
+});
+
+function HomeComponent() {
+  return (
+    <div>
+      <h2>Welcome to Esthetically Clear</h2>
+      <p>A modern full-stack TypeScript application.</p>
+      <ul>
+        <li>TanStack Start - Full-stack React framework</li>
+        <li>Hono - Ultrafast web framework</li>
+        <li>Prisma - Next-generation ORM</li>
+        <li>PostgreSQL - Robust database</li>
+      </ul>
+    </div>
+  );
+}

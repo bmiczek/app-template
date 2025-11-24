@@ -1,0 +1,35 @@
+{
+  "name": "@esthetically-clear/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TanStack Start frontend application",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint app --ext .ts,.tsx",
+    "test": "vitest",
+    "clean": "rm -rf .output dist"
+  },
+  "dependencies": {
+    "@esthetically-clear/shared": "workspace:*",
+    "@tanstack/react-query": "^5.62.8",
+    "@tanstack/react-router": "^1.91.5",
+    "@tanstack/start": "^1.91.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tanstack/router-devtools": "^1.91.5",
+    "@tanstack/router-plugin": "^1.91.4",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vinxi": "^0.4.3",
+    "vitest": "^2.1.8"
+  }
+}
