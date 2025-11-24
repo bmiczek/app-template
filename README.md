@@ -2,46 +2,57 @@
 
 A modern full-stack TypeScript application built with TanStack Start, Hono, Prisma, and PostgreSQL.
 
+---
+
 ## 🚀 Quick Start
 
-**New to this project?** Check out the [Quick Start Guide](docs/QUICK_START.md) for step-by-step setup instructions.
+**New to this project?** Check out the [Quick Start Guide](docs/QUICK_START.md) for detailed setup instructions.
 
-**TL;DR:**
+**Already set up?** Start developing:
 ```bash
-pnpm install                    # Install dependencies
-cp apps/backend/.env.example apps/backend/.env
-cp apps/frontend/.env.example apps/frontend/.env
 docker compose up -d            # Start PostgreSQL
-pnpm dev                        # Start dev servers
+pnpm dev                        # Start all dev servers
 ```
 
-Visit http://localhost:3000 for frontend and http://localhost:3001 for backend.
+Visit http://localhost:3000 (frontend) and http://localhost:3001 (backend).
 
-## Tech Stack
+---
+
+## 📚 Documentation
+
+- **[Quick Start Guide](docs/QUICK_START.md)** - First-time setup, prerequisites, and installation
+- **[Development Roadmap](docs/plans/development-roadmap.md)** - Project tasks, priorities, and progress
+- **[CLAUDE.md](CLAUDE.md)** - Comprehensive guide for AI agents and developers
+
+---
+
+## 🛠️ Tech Stack
 
 ### Frontend
 - **[TanStack Start](https://tanstack.com/start)** - Full-stack React framework with SSR
-- **[TanStack Query](https://tanstack.com/query)** - Powerful data fetching and caching
-- **[TanStack Router](https://tanstack.com/router)** - Type-safe routing (integrated with Start)
-- **[TanStack Form](https://tanstack.com/form)** - Type-safe form management
-- **[TanStack Table](https://tanstack.com/table)** - Headless table library
+- **[TanStack Query](https://tanstack.com/query)** - Data fetching and caching
+- **[TanStack Router](https://tanstack.com/router)** - Type-safe routing
+- **[TanStack Form](https://tanstack.com/form)** - Form management
+- **[TanStack Table](https://tanstack.com/table)** - Headless tables
 - **React 19** - Latest React with Server Components
 - **TypeScript** - Type safety throughout
 
 ### Backend
-- **[Hono](https://hono.dev/)** - Ultrafast web framework for the Edge
+- **[Hono](https://hono.dev/)** - Ultrafast web framework
 - **[Prisma](https://www.prisma.io/)** - Next-generation ORM
 - **PostgreSQL** - Robust relational database
-- **[Better Auth](https://www.better-auth.com/)** - Modern authentication library
+- **[Better Auth](https://www.better-auth.com/)** - Modern authentication (planned)
 - **TypeScript** - End-to-end type safety
 
 ### Infrastructure
-- **Docker Compose** - Local development environment
+- **Docker Compose** - Local PostgreSQL
 - **pnpm Workspaces** - Monorepo management
-- **Railway** - Backend and database hosting
-- **Vercel** - Frontend hosting
+- **Railway** - Backend and database hosting (planned)
+- **Vercel** - Frontend hosting (planned)
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 esthetically-clear/
@@ -50,298 +61,187 @@ esthetically-clear/
 │   │   ├── app/
 │   │   │   ├── routes/    # File-based routing
 │   │   │   ├── components/
-│   │   │   └── utils/
+│   │   │   └── lib/
 │   │   └── package.json
 │   │
 │   └── backend/           # Hono API server
 │       ├── src/
 │       │   ├── routes/    # API routes
 │       │   ├── middleware/
-│       │   ├── db/        # Prisma client
+│       │   ├── lib/
 │       │   └── index.ts
 │       └── package.json
 │
 ├── packages/
-│   ├── shared/            # Shared types and utilities
-│   └── database/          # Prisma schema and migrations
-│       ├── prisma/
-│       │   └── schema.prisma
-│       └── package.json
+│   ├── database/          # Prisma ORM
+│   │   ├── prisma/
+│   │   │   └── schema.prisma
+│   │   └── src/index.ts
+│   │
+│   └── shared/            # Shared types and constants
+│       └── src/
 │
-├── docker-compose.yml     # Local PostgreSQL setup
-├── package.json           # Root package.json
-├── pnpm-workspace.yaml    # Workspace configuration
-└── README.md
+├── docs/                  # Documentation
+│   ├── QUICK_START.md
+│   └── plans/
+│       └── development-roadmap.md
+│
+├── docker-compose.yml     # Local PostgreSQL
+├── CLAUDE.md              # AI agent guide
+└── README.md              # This file
 ```
 
-## Prerequisites
+---
 
-- **Node.js** >= 20.x
-- **pnpm** >= 9.x (install with `npm install -g pnpm`)
-- **Docker** and **Docker Compose** (for local database)
+## ⚡ Essential Commands
 
-## Getting Started
-
-### 1. Install Dependencies
-
+### Development
 ```bash
-pnpm install
+pnpm dev                              # Start all dev servers
+pnpm --filter backend dev             # Backend only
+pnpm --filter frontend dev            # Frontend only
 ```
 
-### 2. Start Local Database
-
+### Database
 ```bash
-docker compose up -d
+pnpm --filter database db:migrate     # Run migrations
+pnpm --filter database db:studio      # Open Prisma Studio
+pnpm --filter database db:generate    # Generate Prisma client
 ```
 
-This starts a PostgreSQL container accessible at `localhost:5432`.
-
-### 3. Configure Environment Variables
-
-Create `.env` files in the appropriate locations:
-
-**`apps/backend/.env`:**
-```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/esthetically_clear"
-NODE_ENV="development"
-PORT=3001
-FRONTEND_URL="http://localhost:3000"
-BETTER_AUTH_SECRET="your-secret-key-here-change-in-production"
-BETTER_AUTH_URL="http://localhost:3001"
-```
-
-**`apps/frontend/.env`:**
-```env
-VITE_API_URL="http://localhost:3001"
-```
-
-### 4. Run Database Migrations
-
+### Other
 ```bash
-pnpm --filter database db:migrate
+pnpm build                            # Build all packages
+pnpm type-check                       # Type check everything
+pnpm test                             # Run all tests
 ```
 
-### 5. Start Development Servers
+**More commands**: See [CLAUDE.md](CLAUDE.md#essential-commands)
 
-```bash
-# Start all services
-pnpm dev
+---
 
-# Or start individually:
-pnpm --filter frontend dev    # Frontend on http://localhost:3000
-pnpm --filter backend dev     # Backend on http://localhost:3001
-```
+## 🎯 Key Features
 
-## Development Scripts
+### End-to-End Type Safety
+- Shared TypeScript types between frontend and backend
+- Prisma generates types from database schema
+- Type-safe API calls with Hono RPC (planned)
+- Type-safe routing with TanStack Router
 
-### Root Level
-- `pnpm dev` - Start all development servers
-- `pnpm build` - Build all apps
-- `pnpm test` - Run all tests
-- `pnpm lint` - Lint all packages
-- `pnpm type-check` - Type check all packages
+### Modern Development Experience
+- Hot module replacement in both frontend and backend
+- Monorepo with shared code
+- Docker Compose for local database
+- Comprehensive TypeScript configuration
 
-### Database (packages/database)
-- `pnpm db:migrate` - Run Prisma migrations
-- `pnpm db:generate` - Generate Prisma client
-- `pnpm db:studio` - Open Prisma Studio
-- `pnpm db:seed` - Seed the database
-- `pnpm db:reset` - Reset database (careful!)
+### Production-Ready Architecture
+- Server-side rendering with TanStack Start
+- Efficient data fetching with TanStack Query
+- Scalable API with Hono
+- Robust database with Prisma and PostgreSQL
 
-### Backend (apps/backend)
-- `pnpm dev` - Start dev server with hot reload
-- `pnpm build` - Build for production
-- `pnpm start` - Start production server
-- `pnpm test` - Run tests
+---
 
-### Frontend (apps/frontend)
-- `pnpm dev` - Start dev server
-- `pnpm build` - Build for production
-- `pnpm start` - Preview production build
-- `pnpm test` - Run tests
+## 🚦 Current Status
 
-## Docker Compose Services
+**Project Phase:** Initial Bootstrap Complete ✅
 
-### PostgreSQL
-- **Port:** 5432
-- **Username:** postgres
-- **Password:** postgres
-- **Database:** esthetically_clear
-- **Volume:** `postgres-data` (persisted)
+**Implemented:**
+- ✅ Monorepo structure with pnpm workspaces
+- ✅ Frontend skeleton with TanStack Start
+- ✅ Backend skeleton with Hono
+- ✅ Docker Compose for PostgreSQL
+- ✅ TypeScript configuration for all packages
+- ✅ Comprehensive documentation
 
-To manage the database:
-```bash
-docker compose up -d      # Start database
-docker compose down       # Stop database
-docker compose down -v    # Stop and remove volumes (deletes data!)
-docker compose logs -f    # View logs
-```
+**Next Steps:** (See [development-roadmap.md](docs/plans/development-roadmap.md))
+- Create Prisma schema with initial models
+- Integrate Better Auth for authentication
+- Build first API endpoints
+- Add TanStack Query configuration
+- Implement authentication UI
 
-## Authentication
+---
 
-The app uses **Better Auth** for authentication with the following features:
+## 🤝 Contributing
 
-- Email/Password authentication
-- Session management
-- CSRF protection
-- Secure cookie handling
-- Social providers (configurable)
-- Two-factor authentication (optional)
+### For Developers
 
-See the Better Auth documentation for configuration options.
+1. Read the [Quick Start Guide](docs/QUICK_START.md) to set up your environment
+2. Review [CLAUDE.md](CLAUDE.md) for coding patterns and conventions
+3. Check [development-roadmap.md](docs/plans/development-roadmap.md) for current priorities
+4. Create a feature branch: `git checkout -b feature/my-feature`
+5. Make your changes following established patterns
+6. Run `pnpm type-check` and `pnpm test` before committing
+7. Commit with descriptive messages
+8. Push and create a pull request
 
-## API Documentation
+### For AI Agents
 
-The Hono backend exposes the following endpoints:
+Read [CLAUDE.md](CLAUDE.md) for comprehensive context including:
+- Architecture decisions and rationale
+- Task execution patterns with code examples
+- Common workflows and best practices
+- Troubleshooting guide
+- Project conventions
 
-### Health Check
-- `GET /health` - Server health status
+---
 
-### Authentication
-- `POST /api/auth/signup` - Create new account
-- `POST /api/auth/signin` - Sign in
-- `POST /api/auth/signout` - Sign out
-- `GET /api/auth/session` - Get current session
+## 📖 Resources
 
-### Protected Routes
-All routes under `/api/*` (except auth) require authentication.
-
-## Deployment
-
-### Frontend (Vercel)
-
-1. Connect your GitHub repository to Vercel
-2. Configure build settings:
-   - **Framework Preset:** TanStack Start (or Vite)
-   - **Root Directory:** `apps/frontend`
-   - **Build Command:** `pnpm build`
-   - **Output Directory:** `.output` or `dist`
-3. Add environment variables:
-   - `VITE_API_URL` - Your Railway backend URL
-
-### Backend + Database (Railway)
-
-1. Create a new project on Railway
-2. Add PostgreSQL database service
-3. Add web service from GitHub:
-   - **Root Directory:** `apps/backend`
-   - **Build Command:** `pnpm install && pnpm build`
-   - **Start Command:** `pnpm start`
-4. Add environment variables:
-   - `DATABASE_URL` - Automatically set by Railway
-   - `FRONTEND_URL` - Your Vercel URL
-   - `BETTER_AUTH_SECRET` - Generate a secure secret
-   - `BETTER_AUTH_URL` - Your Railway backend URL
-5. Run migrations in Railway terminal:
-   ```bash
-   pnpm --filter database db:migrate
-   ```
-
-## Database Schema
-
-The Prisma schema is located in `packages/database/prisma/schema.prisma`.
-
-To modify the schema:
-1. Edit `schema.prisma`
-2. Create a migration: `pnpm db:migrate`
-3. The Prisma client will auto-regenerate
-
-## Type Safety
-
-This project maintains end-to-end type safety:
-
-- **Shared types** in `packages/shared` used by both frontend and backend
-- **Prisma** generates types from database schema
-- **Hono RPC** enables type-safe API calls from frontend
-- **TanStack Router** provides type-safe routing and params
-
-## Testing
-
-```bash
-# Run all tests
-pnpm test
-
-# Run tests in watch mode
-pnpm test:watch
-
-# Run tests with coverage
-pnpm test:coverage
-```
-
-## Contributing
-
-1. Create a feature branch: `git checkout -b feature/my-feature`
-2. Make your changes
-3. Run tests and type checking: `pnpm test && pnpm type-check`
-4. Commit your changes
-5. Push and create a pull request
-
-## Environment Variables Reference
-
-### Required for Backend
-- `DATABASE_URL` - PostgreSQL connection string
-- `BETTER_AUTH_SECRET` - Secret key for auth tokens (32+ characters)
-- `BETTER_AUTH_URL` - Backend URL for auth callbacks
-
-### Required for Frontend
-- `VITE_API_URL` - Backend API URL
-
-### Optional
-- `NODE_ENV` - Environment (development/production)
-- `PORT` - Backend port (default: 3001)
-- `FRONTEND_URL` - Frontend URL for CORS
-
-## Troubleshooting
-
-### Database connection issues
-```bash
-# Check if PostgreSQL is running
-docker compose ps
-
-# Restart database
-docker compose restart postgres
-
-# View logs
-docker compose logs postgres
-```
-
-### Port already in use
-```bash
-# Find process using port 3000 or 3001
-lsof -i :3000
-lsof -i :3001
-
-# Kill the process
-kill -9 <PID>
-```
-
-### Prisma client not found
-```bash
-# Regenerate Prisma client
-pnpm --filter database db:generate
-```
-
-### Type errors after dependency updates
-```bash
-# Clean install
-pnpm store prune
-rm -rf node_modules
-rm pnpm-lock.yaml
-pnpm install
-```
-
-## Resources
-
-- [TanStack Start Docs](https://tanstack.com/start/latest)
-- [Hono Documentation](https://hono.dev/)
-- [Prisma Documentation](https://www.prisma.io/docs)
-- [Better Auth Documentation](https://www.better-auth.com/docs)
+### Official Documentation
+- [TanStack Start](https://tanstack.com/start/latest)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [TanStack Router](https://tanstack.com/router/latest)
+- [Hono](https://hono.dev/)
+- [Prisma](https://www.prisma.io/docs)
+- [Better Auth](https://www.better-auth.com/docs)
 - [pnpm Workspaces](https://pnpm.io/workspaces)
 
-## License
+### Project Documentation
+- [Quick Start Guide](docs/QUICK_START.md) - Setup and installation
+- [Development Roadmap](docs/plans/development-roadmap.md) - Tasks and priorities
+- [CLAUDE.md](CLAUDE.md) - Developer and AI agent guide
+
+---
+
+## 🐛 Troubleshooting
+
+For common issues and solutions, see:
+- [Quick Start Guide - Common Issues](docs/QUICK_START.md#common-issues-and-solutions)
+- [CLAUDE.md - Troubleshooting](CLAUDE.md#troubleshooting-guide)
+
+**Quick fixes:**
+```bash
+# Can't find module
+pnpm install && pnpm --filter database db:generate
+
+# Port in use
+lsof -i :3000  # Find process, then: kill -9 <PID>
+
+# Docker issues
+docker compose logs -f postgres
+```
+
+---
+
+## 📄 License
 
 MIT
 
-## Support
+---
 
-For questions or issues, please open a GitHub issue.
+## 💬 Support
+
+For questions or issues:
+- Check the [documentation](#-documentation) first
+- Review [troubleshooting guides](#-troubleshooting)
+- Open a GitHub issue for bugs or feature requests
+
+---
+
+**Built with [Claude Code](https://claude.com/claude-code)**
+
+---
+
+*Version 0.1.0 - Initial Bootstrap*
