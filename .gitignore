@@ -51,3 +51,6 @@ packages/database/prisma/migrations/
 *.pem
 .vercel
 .railway
+
+# TanStack Start build artifacts
+app.config.timestamp_*.js
