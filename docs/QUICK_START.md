@@ -8,38 +8,56 @@ This guide will help you get the Esthetically Clear project up and running on yo
 
 Before you begin, ensure you have the following installed:
 
-### 1. Node.js (v20 or higher)
+### 1. Node.js (v24 LTS or higher)
 
-**Check if Node.js is installed:**
-```bash
-node --version
-```
+**Recommended: Use nvm (Node Version Manager) for easy Node.js version management.**
 
-**If not installed, choose one of these methods:**
+#### Installing with NVM (Recommended)
 
-#### Option A: Official Installer (Recommended for beginners)
-1. Visit [https://nodejs.org/](https://nodejs.org/)
-2. Download the LTS (Long Term Support) version
-3. Run the installer and follow the prompts
-4. Restart your terminal
-
-#### Option B: Using NVM (Recommended for developers)
+**macOS/Linux:**
 ```bash
 # Install NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
 # Restart your terminal or run:
 source ~/.bashrc  # or ~/.zshrc depending on your shell
 
-# Install Node.js 20
-nvm install 20
-nvm use 20
-nvm alias default 20
+# Install Node.js 24 LTS (uses .nvmrc in project root)
+nvm install
+
+# Set as default
+nvm alias default 24
 
 # Verify installation
-node --version
+node --version  # Should show v24.x.x
 npm --version
 ```
+
+**Windows:**
+```bash
+# Install nvm-windows from: https://github.com/coreybutler/nvm-windows/releases
+# Download and run nvm-setup.exe
+
+# Then in a new terminal:
+nvm install 24
+nvm use 24
+
+# Verify installation
+node --version  # Should show v24.x.x
+npm --version
+```
+
+**Why nvm?** It allows you to switch between Node.js versions easily and automatically uses the version specified in `.nvmrc` when you `cd` into the project directory.
+
+#### Alternative: Official Installer
+
+If you prefer not to use nvm:
+
+1. Visit [https://nodejs.org/](https://nodejs.org/)
+2. Download the **LTS version (v24.x)** - labeled "Recommended for most users"
+3. Run the installer and follow the prompts
+4. Restart your terminal
+5. Verify: `node --version` should show v24.x.x
 
 ### 2. pnpm (v9 or higher)
 
@@ -405,7 +423,8 @@ Now that your development environment is set up:
 
 ## Summary Checklist
 
-- [ ] Node.js v20+ installed (`node --version`)
+- [ ] nvm installed (recommended for Node.js version management)
+- [ ] Node.js v24 LTS installed (`node --version` should show v24.x.x)
 - [ ] pnpm v9+ installed (`pnpm --version`)
 - [ ] Docker installed and running (`docker --version`)
 - [ ] Dependencies installed (`pnpm install`)
