@@ -2,7 +2,7 @@
 
 **Project:** Esthetically Clear
 **Status:** Initial Bootstrap Complete
-**Last Updated:** 2025-11-23
+**Last Updated:** 2025-12-30
 
 ---
 
@@ -24,13 +24,14 @@
 - [x] .gitignore and environment variable templates
 - [x] Basic Hono server with health check endpoint
 - [x] Basic TanStack Start frontend with routing
+- [x] GitHub Actions CI workflow (build, type-check, test)
 
 ---
 
 ## Immediate Tasks (P0 - Critical)
 
 ### Database & ORM
-- [ ] **Create Prisma schema** (`packages/database/prisma/schema.prisma`)
+- [ ] **Create Prisma schema** ⚠️ **BLOCKING CI** - Prisma generate step is commented out in CI until this is done (`packages/database/prisma/schema.prisma`)
   - Define User model (id, email, name, password, createdAt, updatedAt)
   - Define Session model for Better Auth
   - Define Account model for social auth providers
@@ -42,6 +43,7 @@
   - Command: `pnpm --filter database db:migrate`
   - Generate Prisma client
   - Verify database schema is created
+  - **Re-enable Prisma generate step in `.github/workflows/ci.yml`**
 
 - [ ] **Create database seed file** (`packages/database/prisma/seed.ts`)
   - Optional: Add sample data for development
@@ -246,7 +248,7 @@
 
 ## Deferred / Needs Discussion
 - Database backup strategy
-- CI/CD pipeline setup
+- CI/CD pipeline enhancements (deployment, E2E tests)
 - Multi-tenancy support (if needed)
 - Internationalization (i18n)
 - Advanced caching strategies

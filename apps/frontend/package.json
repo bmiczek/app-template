@@ -9,9 +9,9 @@
     "build": "vite build",
     "start": "node .output/server/index.mjs",
     "type-check": "tsc --noEmit",
-    "lint": "eslint app --ext .ts,.tsx",
-    "test": "vitest",
-    "clean": "rm -rf .output dist .vinxi"
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest --config vitest.config.ts",
+    "clean": "rm -rf .output dist"
   },
   "dependencies": {
     "@esthetically-clear/shared": "workspace:*",
