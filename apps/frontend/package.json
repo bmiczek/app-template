@@ -10,7 +10,7 @@
     "start": "node .output/server/index.mjs",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
-    "test": "vitest",
+    "test": "vitest --passWithNoTests",
     "clean": "rm -rf .output dist"
   },
   "dependencies": {
