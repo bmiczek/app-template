@@ -29,11 +29,13 @@ This document provides context and guidelines for AI agents (like Claude Code) w
 ```
 esthetically-clear/
 ├── apps/
-│   ├── frontend/          # TanStack Start application
-│   │   ├── app/
+│   ├── frontend/          # TanStack Start application (with Vite)
+│   │   ├── src/
 │   │   │   ├── routes/    # File-based routing (TanStack Start convention)
 │   │   │   ├── components/
-│   │   │   └── lib/       # Frontend utilities, API client, hooks
+│   │   │   ├── lib/       # Frontend utilities, API client, hooks
+│   │   │   └── router.tsx # Router configuration
+│   │   ├── vite.config.ts # Vite configuration with TanStack Start plugin
 │   │   └── package.json
 │   │
 │   └── backend/           # Hono API server
@@ -130,6 +132,10 @@ pnpm clean
 ---
 
 ## Guidelines for AI Agents
+
+### Core Principles
+
+1. **Prefer Idiomatic Solutions**: Always consider whether a proposed solution is the idiomatic, standard approach for the technology being used. Avoid hacky workarounds (like excessive dependency overrides, monkey-patching, or version pinning) when a proper migration or upgrade path exists. If the idiomatic solution requires more effort, that effort is usually worthwhile for long-term maintainability.
 
 ### Before Starting Any Task
 
@@ -489,7 +495,7 @@ EOF
    };
    ```
 
-6. **Frontend routes**: Create pages in `apps/frontend/app/routes/posts/`
+6. **Frontend routes**: Create pages in `apps/frontend/src/routes/posts/`
 
 7. **Test**: Verify CRUD operations work
 
@@ -656,9 +662,10 @@ If the project grows significantly:
 - **Shared types**: `packages/shared/src/types.ts`
 - **Backend entry**: `apps/backend/src/index.ts`
 - **Backend routes**: `apps/backend/src/routes/`
-- **Frontend entry**: `apps/frontend/app/client.tsx` (client) and `app/ssr.tsx` (server)
-- **Frontend routes**: `apps/frontend/app/routes/`
-- **Frontend components**: `apps/frontend/app/components/`
+- **Frontend router**: `apps/frontend/src/router.tsx`
+- **Frontend routes**: `apps/frontend/src/routes/`
+- **Frontend components**: `apps/frontend/src/components/`
+- **Vite config**: `apps/frontend/vite.config.ts`
 - **Environment examples**: `apps/*/`.env.example`
 - **Task roadmap**: `docs/plans/development-roadmap.md`
 

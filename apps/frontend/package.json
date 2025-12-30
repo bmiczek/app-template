@@ -5,31 +5,29 @@
   "description": "TanStack Start frontend application",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start",
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs",
     "type-check": "tsc --noEmit",
     "lint": "eslint app --ext .ts,.tsx",
     "test": "vitest",
-    "clean": "rm -rf .output dist"
+    "clean": "rm -rf .output dist .vinxi"
   },
   "dependencies": {
     "@esthetically-clear/shared": "workspace:*",
     "@tanstack/react-query": "^5.62.8",
-    "@tanstack/react-router": "^1.144.0",
-    "@tanstack/start": "^1.120.20",
+    "@tanstack/react-router": "1.144.0",
+    "@tanstack/react-start": "1.144.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@tanstack/router-devtools": "^1.144.0",
-    "@tanstack/router-plugin": "^1.144.0",
+    "@tanstack/react-router-devtools": "1.144.0",
     "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.7.2",
-    "vinxi": "^0.4.3",
-    "vite": "^6.0.7",
+    "vite": "^7.0.0",
     "vite-tsconfig-paths": "^6.0.3",
     "vitest": "^2.1.8"
   }
