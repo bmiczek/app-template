@@ -54,3 +54,4 @@ packages/database/prisma/migrations/
 
 # TanStack Start build artifacts
 app.config.timestamp_*.js
+routeTree.gen.ts
