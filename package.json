@@ -20,12 +20,35 @@
     "monorepo"
   ],
   "engines": {
-    "node": ">=24.0.0",
+    "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
   },
   "packageManager": "pnpm@9.12.3",
   "devDependencies": {
     "@types/node": "^22.10.2",
     "typescript": "^5.7.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@tanstack/start": "1.115.0",
+      "@tanstack/start-config": "1.115.0",
+      "@tanstack/start-server-core": "1.115.0",
+      "@tanstack/router-generator": "1.115.0",
+      "@tanstack/react-router-devtools": "1.115.0",
+      "@tanstack/router-plugin": "1.115.0",
+      "@tanstack/react-router": "1.115.0",
+      "@tanstack/router-core": "1.115.0",
+      "@tanstack/react-start-plugin": "1.115.0",
+      "@tanstack/server-functions-plugin": "1.115.0",
+      "@tanstack/react-start-server": "1.115.0",
+      "@tanstack/react-start-client": "1.115.0",
+      "@tanstack/start-api-routes": "1.115.0",
+      "@tanstack/start-server-functions-ssr": "1.115.0",
+      "@tanstack/react-start-router-manifest": "1.115.0",
+      "@tanstack/start-server-functions-client": "1.115.0",
+      "@tanstack/start-server-functions-server": "1.115.0",
+      "@tanstack/start-server-functions-handler": "1.115.0",
+      "@tanstack/start-client-core": "1.115.0"
+    }
   }
 }
