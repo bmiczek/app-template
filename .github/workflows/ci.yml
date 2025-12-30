@@ -32,8 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Generate Prisma client
-        run: pnpm --filter database db:generate
+      # TODO: Uncomment when Prisma schema is created
+      # - name: Generate Prisma client
+      #   run: pnpm --filter database db:generate
 
       - name: Type check
         run: pnpm type-check
