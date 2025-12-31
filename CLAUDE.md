@@ -76,6 +76,7 @@ docs/plans/         # development-roadmap.md (task tracking)
 1. Check [docs/plans/development-roadmap.md](docs/plans/development-roadmap.md) for priorities (P0-P3)
 2. Use TodoWrite to track multi-step tasks
 3. Update roadmap when completing tasks
+4. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
 ### Core Principles
 - Prefer idiomatic solutions over hacky workarounds
