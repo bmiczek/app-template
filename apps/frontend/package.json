@@ -12,6 +12,9 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest --config vitest.config.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "clean": "rm -rf .output dist"
   },
   "dependencies": {
@@ -23,6 +26,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@tanstack/react-router-devtools": "1.144.0",
     "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.2",

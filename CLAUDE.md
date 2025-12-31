@@ -175,6 +175,29 @@ Always use Context7 MCP tools automatically when needing:
 
 ---
 
+## E2E Testing & PR Screenshots
+
+### Running E2E Tests
+```bash
+pnpm --filter frontend test:e2e           # Run all E2E tests (headless)
+pnpm --filter frontend test:e2e:headed    # Run with visible browser
+pnpm --filter frontend test:e2e:ui        # Run with Playwright UI
+```
+
+### PR Screenshot Workflow
+When completing frontend tasks, use the Playwright MCP server to capture screenshots:
+
+1. Start the frontend dev server: `pnpm --filter frontend dev`
+2. Use the MCP Playwright tools to navigate and screenshot
+3. Include screenshots in the PR description under a "Screenshots" section
+
+The MCP Playwright server is configured in `.claude/mcp.json` and provides browser automation capabilities for validation and documentation.
+
+### CI Integration
+E2E tests run automatically on every PR. Test reports are uploaded as artifacts and available for 30 days.
+
+---
+
 ## Resources
 
 - [TanStack Start](https://tanstack.com/start/latest)
