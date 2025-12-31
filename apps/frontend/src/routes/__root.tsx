@@ -1,9 +1,52 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+/// <reference types="vite/client" />
+import {
+  HeadContent,
+  Link,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import * as React from 'react';
 
 export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      {
+        charSet: 'utf-8',
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
+      {
+        title: 'Esthetically Clear',
+      },
+      {
+        name: 'description',
+        content: 'A modern full-stack TypeScript application',
+      },
+    ],
+    links: [{ rel: 'icon', href: '/favicon.ico' }],
+  }),
   component: RootComponent,
+  notFoundComponent: () => <NotFound />,
+  shellComponent: RootDocument,
 });
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
 
 function RootComponent() {
   return (
@@ -16,7 +59,17 @@ function RootComponent() {
           <Outlet />
         </main>
       </div>
-      {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools />}
+      {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>
+  );
+}
+
+function NotFound() {
+  return (
+    <div style={{ padding: '1rem' }}>
+      <h2>404 - Page Not Found</h2>
+      <p>The page you're looking for doesn't exist.</p>
+      <Link to="/">Go back home</Link>
+    </div>
   );
 }
