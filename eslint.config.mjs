@@ -23,8 +23,6 @@ export default tseslint.config(
       // Config files outside tsconfig (parsed without type info)
       '**/playwright.config.ts',
       '**/vitest.config.ts',
-      // E2E tests use Playwright's own config
-      '**/e2e/**',
     ],
   },
 
@@ -49,7 +47,15 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-function-return-type': [
+        'error',
+        {
+          allowExpressions: true,
+          allowTypedFunctionExpressions: true,
+          allowHigherOrderFunctions: true,
+          allowDirectConstAssertionInArrowFunctions: true,
+        },
+      ],
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     },
   },
@@ -131,11 +137,26 @@ export default tseslint.config(
     },
   },
 
-  // Test files
+  // Unit test files
   {
-    files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/e2e/**/*.ts'],
+    files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts'],
     rules: {
       // Relaxed rules for tests
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+
+  // E2E test files (Playwright runs in Node)
+  {
+    files: ['**/e2e/**/*.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // Relaxed rules for E2E tests
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
     },

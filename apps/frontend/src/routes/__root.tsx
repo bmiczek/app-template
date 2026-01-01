@@ -1,11 +1,5 @@
 /// <reference types="vite/client" />
-import {
-  HeadContent,
-  Link,
-  Outlet,
-  Scripts,
-  createRootRoute,
-} from '@tanstack/react-router';
+import { HeadContent, Link, Outlet, Scripts, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import * as React from 'react';
 
@@ -34,7 +28,7 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: { children: React.ReactNode }): React.ReactElement {
   return (
     <html lang="en">
       <head>
@@ -48,7 +42,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   );
 }
 
-function RootComponent() {
+function RootComponent(): React.ReactElement {
   return (
     <>
       <div>
@@ -64,7 +58,7 @@ function RootComponent() {
   );
 }
 
-function NotFound() {
+function NotFound(): React.ReactElement {
   return (
     <div style={{ padding: '1rem' }}>
       <h2>404 - Page Not Found</h2>

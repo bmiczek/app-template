@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
+import type { ReactElement } from 'react';
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
 });
 
-function HomeComponent() {
+function HomeComponent(): ReactElement {
   return (
     <div>
       <h2>Welcome to Esthetically Clear</h2>
