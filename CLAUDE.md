@@ -41,6 +41,8 @@ pnpm --filter database db:studio          # Open Prisma Studio
 # Build & Check
 pnpm build                                # Build all
 pnpm type-check                           # Type check all
+pnpm lint                                 # Run ESLint
+pnpm format                               # Format with Prettier
 
 # Dependencies
 pnpm --filter <workspace> add <package>   # Add to workspace
@@ -149,7 +151,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 - Run `docker compose up -d` before dev
 - Copy `.env.example` to `.env` in apps/backend and apps/frontend
-- Run `pnpm type-check` before commits
+- Run `pnpm type-check` before commits (pre-commit hooks run lint automatically)
 - Generate Prisma client after schema changes
 
 ### Don't
