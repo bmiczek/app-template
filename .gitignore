@@ -42,7 +42,7 @@ test-results/
 playwright/.cache/
 
 # Prisma
-packages/database/prisma/migrations/
+# Note: migrations/ should be tracked for version control
 *.db
 *.db-journal
 

@@ -1,6 +1,6 @@
 # Development Roadmap
 
-**Last Updated:** 2025-12-31
+**Last Updated:** 2026-01-01
 
 ## Priority Levels
 
@@ -30,10 +30,10 @@
 
 ### Database & ORM
 
-- [ ] **Create Prisma schema** - BLOCKING CI (Prisma generate commented out)
+- [x] **Create Prisma schema** - ~~BLOCKING CI~~ ✅ Completed
   - User, Session, Account, Verification models for Better Auth
-  - Run migration: `pnpm --filter database db:migrate`
-  - Re-enable Prisma generate in `.github/workflows/ci.yml`
+  - Migration created: `init_better_auth_models`
+  - Prisma generate re-enabled in `.github/workflows/ci.yml`
 
 - [ ] **Database seed file** (`packages/database/prisma/seed.ts`)
 
