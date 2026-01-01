@@ -83,13 +83,14 @@ docs/plans/         # development-roadmap.md (task tracking)
 3. Update roadmap when completing tasks
 4. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
-### Core Principles
+### Core Principles (IMPORTANT!)
 
 - Prefer idiomatic solutions over hacky workarounds
 - Put shared types in `packages/shared`
 - Use Prisma from `@app-template/database`
 - Ask before major architectural decisions
 - Read existing code patterns before adding new code
+- Always use Context7 MCP tools automatically when needing code generation, setup/configuration steps, library/API documentation
 
 ### Code Style
 
@@ -183,16 +184,6 @@ lsof -i :3000 && kill -9 <PID>
 docker compose logs -f postgres
 docker compose restart postgres
 ```
-
----
-
-## Context7 Usage
-
-Always use Context7 MCP tools automatically when needing:
-
-- Code generation
-- Setup/configuration steps
-- Library/API documentation
 
 ---
 
