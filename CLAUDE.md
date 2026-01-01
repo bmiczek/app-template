@@ -3,6 +3,7 @@
 ## Project Overview
 
 **Esthetically Clear** - Full-stack TypeScript monorepo:
+
 - **Frontend**: TanStack Start (React 19, SSR, Vite-based)
 - **Backend**: Hono
 - **Database**: PostgreSQL + Prisma
@@ -40,6 +41,8 @@ pnpm --filter database db:studio          # Open Prisma Studio
 # Build & Check
 pnpm build                                # Build all
 pnpm type-check                           # Type check all
+pnpm lint                                 # Run ESLint
+pnpm format                               # Format with Prettier
 
 # Dependencies
 pnpm --filter <workspace> add <package>   # Add to workspace
@@ -61,6 +64,7 @@ docs/plans/         # development-roadmap.md (task tracking)
 ```
 
 **Key files:**
+
 - Prisma schema: `packages/database/prisma/schema.prisma`
 - Shared types: `packages/shared/src/types.ts`
 - Backend entry: `apps/backend/src/index.ts`
@@ -73,12 +77,14 @@ docs/plans/         # development-roadmap.md (task tracking)
 ## Guidelines for AI Agents
 
 ### Before Starting
+
 1. Check [docs/plans/development-roadmap.md](docs/plans/development-roadmap.md) for priorities (P0-P3)
 2. Use TodoWrite to track multi-step tasks
 3. Update roadmap when completing tasks
 4. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
 ### Core Principles
+
 - Prefer idiomatic solutions over hacky workarounds
 - Put shared types in `packages/shared`
 - Use Prisma from `@esthetically-clear/database`
@@ -86,6 +92,7 @@ docs/plans/         # development-roadmap.md (task tracking)
 - Read existing code patterns before adding new code
 
 ### Code Style
+
 - PascalCase for interfaces/types, camelCase for functions/variables
 - Always type function parameters and return values
 - Use `interface` over `type` for object shapes
@@ -93,30 +100,36 @@ docs/plans/         # development-roadmap.md (task tracking)
 - Never use `any` - prefer `unknown` and narrow
 
 ### Database Changes
+
 ```bash
 # 1. Edit packages/database/prisma/schema.prisma
 # 2. Run migration
 pnpm --filter database db:migrate
 # 3. Commit schema + migration files
 ```
+
 - Use camelCase for Prisma fields, snake_case for DB columns
 - Never manually edit migration files
 
 ### Adding API Endpoints
+
 1. Create route in `apps/backend/src/routes/<name>.ts`
 2. Register in `apps/backend/src/index.ts`: `app.route('/api/<name>', routes)`
 3. Add types to `packages/shared/src/types.ts`
 4. Use consistent response format: `{ success: boolean, data?: T, error?: string }`
 
 ### Adding Frontend Routes
+
 - Create file in `apps/frontend/src/routes/` (auto-registered)
 - Use TanStack Query for data fetching
 - Use TanStack Form for forms
 
 ### Git Commits
+
 Proactively suggest commits at milestones (features complete, bugs fixed, docs updated). **Always ask before committing.**
 
 Format:
+
 ```
 <type>: <description>
 
@@ -127,6 +140,7 @@ Generated with Claude Code
 
 Co-Authored-By: Claude <noreply@anthropic.com>
 ```
+
 Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 ---
@@ -134,12 +148,14 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 ## Critical Reminders
 
 ### Do
+
 - Run `docker compose up -d` before dev
 - Copy `.env.example` to `.env` in apps/backend and apps/frontend
-- Run `pnpm type-check` before commits
+- Run `pnpm type-check` before commits (pre-commit hooks run lint automatically)
 - Generate Prisma client after schema changes
 
 ### Don't
+
 - Use `db:push` in production (migrations only)
 - Edit migration files manually
 - Commit `.env` files
@@ -150,16 +166,19 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 ## Troubleshooting
 
 **"Cannot find module '@esthetically-clear/...'"**
+
 ```bash
 pnpm install && pnpm --filter database db:generate
 ```
 
 **Port already in use**
+
 ```bash
 lsof -i :3000 && kill -9 <PID>
 ```
 
 **Docker issues**
+
 ```bash
 docker compose logs -f postgres
 docker compose restart postgres
@@ -170,6 +189,7 @@ docker compose restart postgres
 ## Context7 Usage
 
 Always use Context7 MCP tools automatically when needing:
+
 - Code generation
 - Setup/configuration steps
 - Library/API documentation
@@ -179,6 +199,7 @@ Always use Context7 MCP tools automatically when needing:
 ## E2E Testing & PR Screenshots
 
 ### Running E2E Tests
+
 ```bash
 pnpm --filter frontend test:e2e           # Run all E2E tests (headless)
 pnpm --filter frontend test:e2e:headed    # Run with visible browser
@@ -186,6 +207,7 @@ pnpm --filter frontend test:e2e:ui        # Run with Playwright UI
 ```
 
 ### PR Screenshot Workflow
+
 When completing frontend tasks, use the Playwright MCP server to capture screenshots:
 
 1. Start the frontend dev server: `pnpm --filter frontend dev`
@@ -195,6 +217,7 @@ When completing frontend tasks, use the Playwright MCP server to capture screens
 The MCP Playwright server is configured in `.claude/mcp.json` and provides browser automation capabilities for validation and documentation.
 
 ### CI Integration
+
 E2E tests run automatically on every PR. Test reports are uploaded as artifacts and available for 30 days.
 
 ---

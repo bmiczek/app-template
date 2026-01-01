@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "start": "node dist/server/server.js",
     "type-check": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint src",
     "test": "vitest --config vitest.config.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",

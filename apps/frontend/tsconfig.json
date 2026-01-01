@@ -19,6 +19,6 @@
     },
     "types": ["vite/client"]
   },
-  "include": ["src/**/*", "vite.config.ts"],
+  "include": ["src/**/*", "vite.config.ts", "e2e/**/*"],
   "exclude": ["node_modules", ".output", "dist"]
 }

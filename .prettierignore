@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.output/
+
+# Generated files
+*.gen.ts
+routeTree.gen.ts
+
+# Prisma migrations
+packages/database/prisma/migrations/
+
+# Lock files
+pnpm-lock.yaml
+
+# Coverage
+coverage/
+
+# Playwright
+playwright-report/
+test-results/
