@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('homepage loads successfully', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle(/Esthetically Clear/i);
+  await expect(page).toHaveTitle(/App Template/i);
 });
 
 test('homepage has main content', async ({ page }) => {

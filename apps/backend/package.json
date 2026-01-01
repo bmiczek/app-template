@@ -1,5 +1,5 @@
 {
-  "name": "@esthetically-clear/backend",
+  "name": "@app-template/backend",
   "version": "0.1.0",
   "private": true,
   "description": "Hono backend API server",
@@ -14,8 +14,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@esthetically-clear/database": "workspace:*",
-    "@esthetically-clear/shared": "workspace:*",
+    "@app-template/database": "workspace:*",
+    "@app-template/shared": "workspace:*",
     "@hono/node-server": "^1.13.7",
     "better-auth": "^1.4.2",
     "hono": "^4.6.14"

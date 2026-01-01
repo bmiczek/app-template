@@ -14,7 +14,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Esthetically Clear',
+        title: 'App Template',
       },
       {
         name: 'description',
@@ -47,7 +47,7 @@ function RootComponent(): React.ReactElement {
     <>
       <div>
         <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-          <h1>Esthetically Clear</h1>
+          <h1>App Template</h1>
         </nav>
         <main style={{ padding: '1rem' }}>
           <Outlet />
