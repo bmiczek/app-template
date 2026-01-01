@@ -56,10 +56,10 @@ packages/
 
 ## 📚 Documentation
 
-| Document | Purpose |
-|----------|---------|
-| [CLAUDE.md](CLAUDE.md) | AI agent guide - commands, patterns, conventions |
-| [development-roadmap.md](docs/plans/development-roadmap.md) | Task priorities and progress |
+| Document                                                    | Purpose                                          |
+| ----------------------------------------------------------- | ------------------------------------------------ |
+| [CLAUDE.md](CLAUDE.md)                                      | AI agent guide - commands, patterns, conventions |
+| [development-roadmap.md](docs/plans/development-roadmap.md) | Task priorities and progress                     |
 
 ---
 
@@ -74,16 +74,19 @@ packages/
 ## 🐛 Common Issues
 
 **Port in use:**
+
 ```bash
 lsof -i :3000  # Find PID, then: kill -9 <PID>
 ```
 
 **Module not found:**
+
 ```bash
 pnpm install && pnpm --filter database db:generate
 ```
 
 **Docker issues:**
+
 ```bash
 docker compose logs -f postgres
 docker compose restart postgres

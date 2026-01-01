@@ -1,0 +1,146 @@
+// @ts-check
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import globals from 'globals';
+
+export default tseslint.config(
+  // Global ignores
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/.output/**',
+      '**/coverage/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
+      // Generated files
+      '**/*.gen.ts',
+      '**/routeTree.gen.ts',
+      // Config files outside tsconfig (parsed without type info)
+      '**/playwright.config.ts',
+      '**/vitest.config.ts',
+      // E2E tests use Playwright's own config
+      '**/e2e/**',
+    ],
+  },
+
+  // Base ESLint recommended rules
+  eslint.configs.recommended,
+
+  // TypeScript rules for all TS files
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    extends: [...tseslint.configs.recommendedTypeChecked],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      // Align with project code style from CLAUDE.md
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    },
+  },
+
+  // React-specific rules for frontend
+  {
+    files: ['apps/frontend/**/*.tsx', 'apps/frontend/**/*.ts'],
+    plugins: {
+      react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
+    },
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        ...globals.browser,
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    rules: {
+      ...reactPlugin.configs.flat.recommended.rules,
+      ...reactPlugin.configs.flat['jsx-runtime'].rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      // React 19 with new JSX transform doesn't need React in scope
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off', // Using TypeScript for prop validation
+    },
+  },
+
+  // Backend-specific rules (Node.js environment)
+  {
+    files: ['apps/backend/**/*.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // Allow console in backend
+      'no-console': 'off',
+    },
+  },
+
+  // Database package rules
+  // Note: Prisma client types are generated, so some type-checking rules may
+  // fail if the client hasn't been generated yet. Run `pnpm db:generate` first.
+  {
+    files: ['packages/database/**/*.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // Prisma client is generated code, so type inference can be unreliable
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+    },
+  },
+
+  // Shared package rules
+  {
+    files: ['packages/shared/**/*.ts'],
+  },
+
+  // Config files (vite, playwright, etc.)
+  {
+    files: ['**/*.config.ts', '**/*.config.mjs', '**/vite.config.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
+  // Test files
+  {
+    files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/e2e/**/*.ts'],
+    rules: {
+      // Relaxed rules for tests
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+
+  // Prettier must be last to override formatting rules
+  eslintConfigPrettier
+);

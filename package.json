@@ -7,9 +7,13 @@
     "dev": "pnpm --parallel --filter frontend --filter backend dev",
     "build": "pnpm --recursive build",
     "test": "pnpm --recursive test",
-    "lint": "pnpm --recursive lint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "type-check": "pnpm --recursive type-check",
-    "clean": "pnpm --recursive clean && rm -rf node_modules"
+    "clean": "pnpm --recursive clean && rm -rf node_modules",
+    "prepare": "husky"
   },
   "keywords": [
     "tanstack",
@@ -25,7 +29,17 @@
   },
   "packageManager": "pnpm@9.12.3",
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@types/node": "^22.10.2",
-    "typescript": "^5.7.2"
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.4",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.51.0"
   }
 }

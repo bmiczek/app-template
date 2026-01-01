@@ -41,6 +41,12 @@ jobs:
       # - name: Generate Prisma client
       #   run: pnpm --filter database db:generate
 
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check formatting
+        run: pnpm format:check
+
       - name: Type check
         run: pnpm type-check
 
