@@ -37,9 +37,8 @@ jobs:
       - name: Install rollup native bindings
         run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter frontend
 
-      # TODO: Uncomment when Prisma schema is created
-      # - name: Generate Prisma client
-      #   run: pnpm --filter database db:generate
+      - name: Generate Prisma client
+        run: pnpm --filter database db:generate
 
       - name: Lint
         run: pnpm lint
