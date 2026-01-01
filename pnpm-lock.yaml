@@ -50,10 +50,10 @@ importers:
 
   apps/backend:
     dependencies:
-      '@esthetically-clear/database':
+      '@app-template/database':
         specifier: workspace:*
         version: link:../../packages/database
-      '@esthetically-clear/shared':
+      '@app-template/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@hono/node-server':
@@ -81,7 +81,7 @@ importers:
 
   apps/frontend:
     dependencies:
-      '@esthetically-clear/shared':
+      '@app-template/shared':
         specifier: workspace:*
         version: link:../../packages/shared
       '@tanstack/react-query':

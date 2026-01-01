@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Esthetically Clear** - Full-stack TypeScript monorepo:
+**App Template** - Full-stack TypeScript monorepo:
 
 - **Frontend**: TanStack Start (React 19, SSR, Vite-based)
 - **Backend**: Hono
@@ -87,7 +87,7 @@ docs/plans/         # development-roadmap.md (task tracking)
 
 - Prefer idiomatic solutions over hacky workarounds
 - Put shared types in `packages/shared`
-- Use Prisma from `@esthetically-clear/database`
+- Use Prisma from `@app-template/database`
 - Ask before major architectural decisions
 - Read existing code patterns before adding new code
 
@@ -165,7 +165,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 ## Troubleshooting
 
-**"Cannot find module '@esthetically-clear/...'"**
+**"Cannot find module '@app-template/...'"**
 
 ```bash
 pnpm install && pnpm --filter database db:generate

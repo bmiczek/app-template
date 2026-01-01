@@ -1,5 +1,5 @@
 {
-  "name": "esthetically-clear",
+  "name": "app-template",
   "version": "0.1.0",
   "private": true,
   "description": "Modern full-stack TypeScript application with TanStack Start, Hono, Prisma, and PostgreSQL",

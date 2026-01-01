@@ -8,7 +8,7 @@ export const Route = createFileRoute('/')({
 function HomeComponent(): ReactElement {
   return (
     <div>
-      <h2>Welcome to Esthetically Clear</h2>
+      <h2>Welcome to App Template</h2>
       <p>A modern full-stack TypeScript application.</p>
       <ul>
         <li>TanStack Start - Full-stack React framework</li>

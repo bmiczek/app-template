@@ -1,5 +1,5 @@
 {
-  "name": "@esthetically-clear/database",
+  "name": "@app-template/database",
   "version": "0.1.0",
   "private": true,
   "description": "Database package with Prisma ORM",

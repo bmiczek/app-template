@@ -1,4 +1,4 @@
-# Esthetically Clear
+# App Template
 
 Full-stack TypeScript monorepo with TanStack Start, Hono, Prisma, and PostgreSQL.
 

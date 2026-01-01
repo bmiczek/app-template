@@ -26,7 +26,7 @@ app.get('/health', (c) => {
 // API routes
 app.get('/api', (c) => {
   return c.json({
-    message: 'Welcome to Esthetically Clear API',
+    message: 'Welcome to App Template API',
     version: '1.0.0',
   });
 });
