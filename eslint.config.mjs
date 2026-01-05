@@ -23,6 +23,7 @@ export default tseslint.config(
       // Config files outside tsconfig (parsed without type info)
       '**/playwright.config.ts',
       '**/vitest.config.ts',
+      '**/prisma.config.ts',
     ],
   },
 
