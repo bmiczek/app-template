@@ -83,6 +83,29 @@ docs/plans/         # development-roadmap.md (task tracking)
 3. Update roadmap when completing tasks
 4. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
+### Plan Mode (CRITICAL - Use Frequently!)
+
+**Enter plan mode for ANY non-trivial task.** This project has multiple packages with interdependencies—jumping straight to implementation often leads to mistakes.
+
+**ALWAYS use plan mode when:**
+
+- Adding or modifying features (even "simple" ones like buttons or forms)
+- Making changes that touch multiple packages (frontend + backend + shared)
+- Working with database schema changes
+- Implementing authentication or authorization logic
+- Adding new API endpoints with frontend integration
+- Refactoring existing code
+- Fixing bugs that aren't immediately obvious one-liners
+- Any task where you're unsure about the approach
+
+**In plan mode, you should:**
+
+1. Identify all files that will need changes
+2. Check for existing similar implementations to follow
+3. Use Context7 MCP tools for up-to-date library documentation
+
+**Only skip plan mode for:** typo fixes, single-line changes, or when user gives extremely detailed step-by-step instructions.
+
 ### Core Principles (IMPORTANT!)
 
 - Prefer idiomatic solutions over hacky workarounds
