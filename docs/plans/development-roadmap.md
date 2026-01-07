@@ -35,7 +35,9 @@
   - Migration created: `init_better_auth_models`
   - Prisma generate re-enabled in `.github/workflows/ci.yml`
 
-- [ ] **Database seed file** (`packages/database/prisma/seed.ts`)
+- [x] **Database seed file** (`packages/database/prisma/seed.ts`) ✅ Completed
+  - Creates admin user (admin@example.com / admin123)
+  - Uses Better Auth crypto for password hashing
 
 ### Authentication
 
