@@ -18,7 +18,8 @@
     "@app-template/shared": "workspace:*",
     "@hono/node-server": "^1.13.7",
     "better-auth": "^1.4.2",
-    "hono": "^4.6.14"
+    "hono": "^4.6.14",
+    "hono-rate-limiter": "^0.5.3"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
