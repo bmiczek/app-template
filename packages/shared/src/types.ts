@@ -35,3 +35,29 @@ export interface Session {
   user: User;
   expiresAt: Date;
 }
+
+// Auth request types
+export interface SignUpRequest {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export interface SignInRequest {
+  email: string;
+  password: string;
+}
+
+// Auth response types
+export interface AuthStatusResponse {
+  authenticated: boolean;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    emailVerified: boolean;
+  } | null;
+  session: {
+    expiresAt: Date;
+  } | null;
+}
