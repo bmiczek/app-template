@@ -36,6 +36,11 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
+          # Enable plugins for enhanced capabilities
+          plugins: |
+            code-review@claude-code-plugins
+            feature-dev@claude-code-plugins
+
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
             actions: read
