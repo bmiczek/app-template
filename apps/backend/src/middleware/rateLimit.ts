@@ -6,9 +6,9 @@ import { rateLimiter } from 'hono-rate-limiter';
  * Handles X-Forwarded-For header for requests behind a proxy.
  */
 function getClientIp(c: Context): string {
-  return (
-    c.req.header('x-forwarded-for')?.split(',')[0]?.trim() ?? c.req.header('x-real-ip') ?? 'unknown'
-  );
+  const forwarded = c.req.header('x-forwarded-for');
+  if (forwarded) return forwarded.split(',')[0].trim();
+  return c.req.header('x-real-ip') ?? 'unknown';
 }
 
 /**

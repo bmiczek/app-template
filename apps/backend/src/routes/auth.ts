@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { auth, serializeUser } from '../lib/auth';
+import { auth } from '../lib/auth';
 import type { AuthVariables } from '../middleware/auth';
 import { authRateLimiter, signInRateLimiter } from '../middleware/rateLimit';
 
@@ -47,7 +47,13 @@ authRoutes.get('/status', (c) => {
     success: true,
     data: {
       authenticated: true,
-      user: serializeUser(user),
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        emailVerified: user.emailVerified,
+        image: user.image,
+      },
       session: {
         expiresAt: session.expiresAt,
       },

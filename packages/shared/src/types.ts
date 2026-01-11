@@ -11,8 +11,6 @@ export interface ApiResponse<T = unknown> {
   data?: T;
   /** Error message (present on failure) */
   error?: string;
-  /** Optional additional message for the client */
-  message?: string;
 }
 
 /**
@@ -62,28 +60,6 @@ export interface User {
 export interface Session {
   user: User;
   expiresAt: Date;
-}
-
-/**
- * Request payload for user sign-up via email/password.
- */
-export interface SignUpRequest {
-  /** User's email address */
-  email: string;
-  /** Password (8-128 characters) */
-  password: string;
-  /** User's display name */
-  name: string;
-}
-
-/**
- * Request payload for user sign-in.
- */
-export interface SignInRequest {
-  /** User's email address */
-  email: string;
-  /** User's password */
-  password: string;
 }
 
 /**

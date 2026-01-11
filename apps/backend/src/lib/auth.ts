@@ -20,8 +20,8 @@ if (secret.length < MIN_SECRET_LENGTH) {
 }
 
 // Session configuration (in seconds)
-const SESSION_EXPIRES_IN = Number(process.env.SESSION_EXPIRES_IN) || 60 * 60 * 24 * 7; // 7 days default
-const SESSION_UPDATE_AGE = Number(process.env.SESSION_UPDATE_AGE) || 60 * 60 * 24; // 1 day default
+const SESSION_EXPIRES_IN = parseInt(process.env.SESSION_EXPIRES_IN ?? '', 10) || 60 * 60 * 24 * 7; // 7 days default
+const SESSION_UPDATE_AGE = parseInt(process.env.SESSION_UPDATE_AGE ?? '', 10) || 60 * 60 * 24; // 1 day default
 
 /**
  * Better Auth instance configured with Prisma adapter and email/password authentication.
@@ -60,29 +60,3 @@ export const auth = betterAuth({
  */
 export type AuthSession = typeof auth.$Infer.Session.session;
 export type AuthUser = typeof auth.$Infer.Session.user;
-
-/**
- * Public user fields exposed in API responses.
- * Centralizes field selection to prevent accidental data exposure.
- */
-export interface SerializedUser {
-  id: string;
-  email: string;
-  name: string | null;
-  emailVerified: boolean | null;
-  image: string | null;
-}
-
-/**
- * Serializes a user object for public API responses.
- * Only includes whitelisted fields to prevent accidental data exposure.
- */
-export function serializeUser(user: AuthUser): SerializedUser {
-  return {
-    id: user.id,
-    email: user.email,
-    name: user.name ?? null,
-    emailVerified: user.emailVerified ?? null,
-    image: user.image ?? null,
-  };
-}

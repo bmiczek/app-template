@@ -11,8 +11,5 @@
   },
   "devDependencies": {
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "zod": "^4.3.5"
   }
 }

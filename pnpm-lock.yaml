@@ -163,10 +163,6 @@ importers:
         version: 5.9.3
 
   packages/shared:
-    dependencies:
-      zod:
-        specifier: ^4.3.5
-        version: 4.3.5
     devDependencies:
       typescript:
         specifier: ^5.7.2
@@ -3058,9 +3054,6 @@ packages:
 
   zod@4.2.1:
     resolution: {integrity: sha512-0wZ1IRqGGhMP76gLqz8EyfBXKk0J2qo2+H3fi4mcUP/KtTocoX08nmIAHl1Z2kJIZbZee8KOpBCSNPRgauucjw==}
-
-  zod@4.3.5:
-    resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
 
 snapshots:
 
@@ -6213,5 +6206,3 @@ snapshots:
   zod@3.25.76: {}
 
   zod@4.2.1: {}
-
-  zod@4.3.5: {}

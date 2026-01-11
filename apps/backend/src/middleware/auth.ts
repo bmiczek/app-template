@@ -1,4 +1,4 @@
-import type { Context, MiddlewareHandler } from 'hono';
+import type { MiddlewareHandler } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { auth, type AuthSession, type AuthUser } from '../lib/auth';
 
@@ -30,11 +30,12 @@ export function authMiddleware(): MiddlewareHandler<{ Variables: AuthVariables }
       c.set('session', session?.session ?? null);
     } catch (error) {
       // Log sanitized error to prevent information leakage in production
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error(
+        'Session validation error:',
+        error instanceof Error ? error.message : 'Unknown error'
+      );
       if (process.env.NODE_ENV === 'development') {
-        console.error('Session validation error:', error);
-      } else {
-        console.error('Session validation error:', errorMessage);
+        console.error(error); // Full stack trace in dev
       }
       c.set('user', null);
       c.set('session', null);
@@ -71,36 +72,4 @@ export function requireAuth(): MiddlewareHandler<{ Variables: AuthVariables }> {
 
     await next();
   };
-}
-
-/**
- * Helper to get the current authenticated user from context.
- * Returns null if not authenticated.
- *
- * @example
- * ```typescript
- * app.get('/api/profile', requireAuth(), (c) => {
- *   const user = getAuthUser(c);
- *   return c.json({ success: true, data: { user } });
- * });
- * ```
- */
-export function getAuthUser(c: Context<{ Variables: AuthVariables }>): AuthUser | null {
-  return c.get('user');
-}
-
-/**
- * Helper to get the current session from context.
- * Returns null if no session.
- *
- * @example
- * ```typescript
- * app.get('/api/session-info', requireAuth(), (c) => {
- *   const session = getAuthSession(c);
- *   return c.json({ success: true, data: { expiresAt: session?.expiresAt } });
- * });
- * ```
- */
-export function getAuthSession(c: Context<{ Variables: AuthVariables }>): AuthSession | null {
-  return c.get('session');
 }
