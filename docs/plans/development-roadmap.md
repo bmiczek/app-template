@@ -59,7 +59,7 @@
 
 - [ ] API versioning (`/api/v1` route group)
 - [ ] Example CRUD endpoints with Zod validation
-- [ ] Global error handler middleware
+- [x] Global error handler middleware
 
 ### Frontend Development
 

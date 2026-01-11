@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { authMiddleware, type AuthVariables } from './middleware/auth';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { authRoutes } from './routes/auth';
 
 const app = new Hono<{ Variables: AuthVariables }>();
@@ -19,6 +20,10 @@ app.use(
 
 // Auth middleware - attaches session/user to all requests
 app.use('*', authMiddleware());
+
+// Error handlers
+app.onError(errorHandler);
+app.notFound(notFoundHandler);
 
 // Health check
 app.get('/health', (c) => {
