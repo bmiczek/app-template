@@ -1,6 +1,6 @@
 # Development Roadmap
 
-**Last Updated:** 2026-01-01
+**Last Updated:** 2026-01-10
 
 ## Priority Levels
 
@@ -41,10 +41,10 @@
 
 ### Authentication
 
-- [ ] **Backend auth setup**
+- [x] **Backend auth setup** ✅ Completed
   - Config: `apps/backend/src/lib/auth.ts`
-  - Routes: `apps/backend/src/routes/auth.ts` (signup, signin, signout, session)
-  - Middleware: `apps/backend/src/middleware/auth.ts`
+  - Routes: `apps/backend/src/routes/auth.ts` (signup, signin, signout, session, status)
+  - Middleware: `apps/backend/src/middleware/auth.ts` (authMiddleware, requireAuth)
 
 - [ ] **Frontend auth integration**
   - API client with CSRF handling

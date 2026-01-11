@@ -2,8 +2,10 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
+import { authMiddleware, type AuthVariables } from './middleware/auth';
+import { authRoutes } from './routes/auth';
 
-const app = new Hono();
+const app = new Hono<{ Variables: AuthVariables }>();
 
 // Middleware
 app.use('*', logger());
@@ -14,6 +16,9 @@ app.use(
     credentials: true,
   })
 );
+
+// Auth middleware - attaches session/user to all requests
+app.use('*', authMiddleware());
 
 // Health check
 app.get('/health', (c) => {
@@ -30,6 +35,9 @@ app.get('/api', (c) => {
     version: '1.0.0',
   });
 });
+
+// Auth routes
+app.route('/api/auth', authRoutes);
 
 const port = Number(process.env.PORT) || 3001;
 
