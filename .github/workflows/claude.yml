@@ -40,6 +40,8 @@ jobs:
           plugins: |
             code-review@claude-code-plugins
             feature-dev@claude-code-plugins
+          plugin_marketplaces: |
+            https://github.com/anthropics/claude-code-plugins.git
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
