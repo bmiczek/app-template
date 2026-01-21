@@ -38,10 +38,10 @@ jobs:
 
           # Enable plugins for enhanced capabilities
           plugins: |
-            code-review@claude-code-plugins
-            feature-dev@claude-code-plugins
+            code-review@claude-plugins-official
+            feature-dev@claude-plugins-official
           plugin_marketplaces: |
-            https://github.com/anthropics/claude-code-plugins.git
+            https://github.com/anthropics/claude-plugins-official.git
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
