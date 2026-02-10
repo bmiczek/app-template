@@ -1,9 +1,17 @@
 /// <reference types="vite/client" />
-import { HeadContent, Link, Outlet, Scripts, createRootRoute } from '@tanstack/react-router';
+import {
+  HeadContent,
+  Link,
+  Outlet,
+  Scripts,
+  createRootRouteWithContext,
+} from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import * as React from 'react';
+import { authClient } from '../lib/auth-client';
+import type { RouterContext } from '../router';
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       {
@@ -42,13 +50,52 @@ function RootDocument({ children }: { children: React.ReactNode }): React.ReactE
   );
 }
 
+function NavBar(): React.ReactElement {
+  const { data: session, isPending } = authClient.useSession();
+
+  return (
+    <nav
+      style={{
+        padding: '1rem',
+        borderBottom: '1px solid #ccc',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
+    >
+      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <h1 style={{ margin: 0 }}>App Template</h1>
+      </Link>
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        {isPending ? null : session ? (
+          <>
+            <span>{session.user.name}</span>
+            <Link to="/dashboard">Dashboard</Link>
+            <button
+              onClick={() => {
+                void authClient.signOut();
+              }}
+              style={{ cursor: 'pointer' }}
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+}
+
 function RootComponent(): React.ReactElement {
   return (
     <>
       <div>
-        <nav style={{ padding: '1rem', borderBottom: '1px solid #ccc' }}>
-          <h1>App Template</h1>
-        </nav>
+        <NavBar />
         <main style={{ padding: '1rem' }}>
           <Outlet />
         </main>

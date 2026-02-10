@@ -13,20 +13,15 @@ import { authRateLimiter, signInRateLimiter } from '../middleware/rateLimit';
  * - GET  /api/auth/get-session - Get current session info
  *
  * Rate limiting:
- * - All auth routes: 10 requests per 15 minutes
- * - Sign-in routes: 5 attempts per hour (brute-force protection)
+ * - Sign-up/sign-out routes: 100 requests per 15 minutes
+ * - Sign-in routes: 100/15min general + 5 attempts per hour (brute-force protection)
+ * - Session reads (get-session, status): not rate-limited
  */
 export const authRoutes = new Hono<{ Variables: AuthVariables }>();
 
-// Apply general rate limiting to all auth routes
-authRoutes.use('/*', authRateLimiter);
-
-// Apply stricter rate limiting to sign-in routes
-authRoutes.use('/sign-in/*', signInRateLimiter);
-
 /**
  * Custom endpoint to check auth status with consistent API format.
- * Defined before the catch-all handler so it takes precedence.
+ * Defined before rate-limited routes — session reads should not be throttled.
  */
 authRoutes.get('/status', (c) => {
   const user = c.get('user');
@@ -62,7 +57,19 @@ authRoutes.get('/status', (c) => {
 });
 
 /**
- * Mount Better Auth's built-in handler for all auth routes.
+ * Better Auth's get-session endpoint — not rate-limited (called on every navigation).
+ */
+authRoutes.get('/get-session', (c) => {
+  return auth.handler(c.req.raw);
+});
+
+// Apply rate limiting to mutating auth routes (sign-up, sign-in, sign-out)
+authRoutes.use('/sign-in/*', authRateLimiter, signInRateLimiter);
+authRoutes.use('/sign-up/*', authRateLimiter);
+authRoutes.use('/sign-out', authRateLimiter);
+
+/**
+ * Mount Better Auth's built-in handler for all remaining auth routes.
  * This catch-all must be defined after specific routes.
  * Includes OPTIONS for CORS preflight requests.
  *
