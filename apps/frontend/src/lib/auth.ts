@@ -1,6 +1,9 @@
 import { prisma } from '@app-template/database';
+import { getSecureCookies, validateAuthEnv } from '@app-template/shared';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+
+validateAuthEnv();
 
 /**
  * Server-side Better Auth instance for SSR session checking.
@@ -17,4 +20,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  advanced: {
+    useSecureCookies: getSecureCookies(),
+  },
 });

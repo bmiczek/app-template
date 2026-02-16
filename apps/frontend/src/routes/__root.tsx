@@ -52,6 +52,17 @@ function RootDocument({ children }: { children: React.ReactNode }): React.ReactE
 
 function NavBar(): React.ReactElement {
   const { data: session, isPending } = authClient.useSession();
+  const [isSigningOut, setIsSigningOut] = React.useState(false);
+
+  async function handleSignOut(): Promise<void> {
+    setIsSigningOut(true);
+    try {
+      await authClient.signOut();
+    } catch (error) {
+      console.error('Sign out failed:', error);
+      setIsSigningOut(false);
+    }
+  }
 
   return (
     <nav
@@ -72,12 +83,11 @@ function NavBar(): React.ReactElement {
             <span>{session.user.name}</span>
             <Link to="/dashboard">Dashboard</Link>
             <button
-              onClick={() => {
-                void authClient.signOut();
-              }}
-              style={{ cursor: 'pointer' }}
+              onClick={() => void handleSignOut()}
+              disabled={isSigningOut}
+              style={{ cursor: isSigningOut ? 'not-allowed' : 'pointer' }}
             >
-              Sign Out
+              {isSigningOut ? 'Signing out...' : 'Sign Out'}
             </button>
           </>
         ) : (

@@ -1,23 +1,9 @@
 import { prisma } from '@app-template/database';
+import { AUTH_PASSWORD, getSecureCookies, validateAuthEnv } from '@app-template/shared';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 
-// Validate required environment variables at startup
-const requiredEnvVars = ['BETTER_AUTH_SECRET', 'BETTER_AUTH_URL'] as const;
-for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    throw new Error(`Missing required environment variable: ${envVar}`);
-  }
-}
-
-// Validate BETTER_AUTH_SECRET minimum length for security
-const MIN_SECRET_LENGTH = 32;
-const secret = process.env.BETTER_AUTH_SECRET!;
-if (secret.length < MIN_SECRET_LENGTH) {
-  throw new Error(
-    `BETTER_AUTH_SECRET must be at least ${MIN_SECRET_LENGTH} characters. Current: ${secret.length}`
-  );
-}
+validateAuthEnv();
 
 // Session configuration (in seconds)
 const SESSION_EXPIRES_IN = parseInt(process.env.SESSION_EXPIRES_IN ?? '', 10) || 60 * 60 * 24 * 7; // 7 days default
@@ -43,15 +29,15 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 8,
-    maxPasswordLength: 128,
+    minPasswordLength: AUTH_PASSWORD.MIN_LENGTH,
+    maxPasswordLength: AUTH_PASSWORD.MAX_LENGTH,
   },
   session: {
     expiresIn: SESSION_EXPIRES_IN,
     updateAge: SESSION_UPDATE_AGE,
   },
   advanced: {
-    useSecureCookies: process.env.NODE_ENV === 'production',
+    useSecureCookies: getSecureCookies(),
   },
 });
 

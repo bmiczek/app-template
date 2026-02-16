@@ -1,3 +1,4 @@
+import { AUTH_PASSWORD } from '@app-template/shared';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
@@ -23,8 +24,8 @@ function SignupComponent(): ReactElement {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return 'Please enter a valid email address.';
     }
-    if (password.length < 8 || password.length > 128) {
-      return 'Password must be between 8 and 128 characters.';
+    if (password.length < AUTH_PASSWORD.MIN_LENGTH || password.length > AUTH_PASSWORD.MAX_LENGTH) {
+      return `Password must be between ${AUTH_PASSWORD.MIN_LENGTH} and ${AUTH_PASSWORD.MAX_LENGTH} characters.`;
     }
     if (password !== confirmPassword) {
       return 'Passwords do not match.';
