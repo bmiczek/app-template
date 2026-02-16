@@ -4,8 +4,7 @@
 
 **App Template** - Full-stack TypeScript monorepo:
 
-- **Frontend**: TanStack Start (React 19, SSR, Vite-based)
-- **Backend**: Hono
+- **App**: TanStack Start (React 19, SSR, Vite-based, server routes)
 - **Database**: PostgreSQL + Prisma
 - **Auth**: Better Auth
 - **Infra**: Docker Compose, pnpm workspaces
@@ -29,9 +28,8 @@ When searching docs, look for **Vite-based TanStack Start (2024-2025)**.
 ```bash
 # Dev
 pnpm install                              # Install all
-pnpm dev                                  # Run frontend + backend
-pnpm --filter backend dev                 # Backend only
-pnpm --filter frontend dev                # Frontend only
+pnpm dev                                  # Run app (port 3000)
+pnpm --filter web dev                     # Explicit filter
 
 # Database
 pnpm --filter database db:migrate         # Run migrations
@@ -55,22 +53,24 @@ pnpm add -w -D <package>                  # Add to root (build tools only)
 
 ```
 apps/
-  frontend/         # TanStack Start (routes in src/routes/)
-  backend/          # Hono API (routes in src/routes/)
+  web/              # TanStack Start (pages + API server routes)
+    src/routes/     # File-based routing (auto-registered)
+    src/lib/        # Auth, utilities
 packages/
   database/         # Prisma schema + client
   shared/           # Shared types & constants
-docs/plans/         # development-roadmap.md (task tracking)
 ```
 
 **Key files:**
 
 - Prisma schema: `packages/database/prisma/schema.prisma`
 - Shared types: `packages/shared/src/types.ts`
-- Backend entry: `apps/backend/src/index.ts`
-- Vite config: `apps/frontend/vite.config.ts`
+- Auth config: `apps/web/src/lib/auth.ts`
+- Auth client: `apps/web/src/lib/auth-client.ts`
+- Auth API route: `apps/web/src/routes/api/auth/$.tsx`
+- Vite config: `apps/web/vite.config.ts`
 
-**Ports:** Frontend: 3000 | Backend: 3001 | PostgreSQL: 5432
+**Port:** App: 3000 | PostgreSQL: 5432
 
 ---
 
@@ -78,10 +78,8 @@ docs/plans/         # development-roadmap.md (task tracking)
 
 ### Before Starting
 
-1. Check [docs/plans/development-roadmap.md](docs/plans/development-roadmap.md) for priorities (P0-P3)
-2. Use TodoWrite to track multi-step tasks
-3. Update roadmap when completing tasks
-4. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
+1. Use TodoWrite to track multi-step tasks
+2. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
 ### Plan Mode (CRITICAL - Use Frequently!)
 
@@ -90,10 +88,10 @@ docs/plans/         # development-roadmap.md (task tracking)
 **ALWAYS use plan mode when:**
 
 - Adding or modifying features (even "simple" ones like buttons or forms)
-- Making changes that touch multiple packages (frontend + backend + shared)
+- Making changes that touch multiple packages (web + shared + database)
 - Working with database schema changes
 - Implementing authentication or authorization logic
-- Adding new API endpoints with frontend integration
+- Adding new server routes or API endpoints
 - Refactoring existing code
 - Fixing bugs that aren't immediately obvious one-liners
 - Any task where you're unsure about the approach
@@ -135,16 +133,48 @@ pnpm --filter database db:migrate
 - Use camelCase for Prisma fields, snake_case for DB columns
 - Never manually edit migration files
 
-### Adding API Endpoints
+### Adding Server Routes (API Endpoints)
 
-1. Create route in `apps/backend/src/routes/<name>.ts`
-2. Register in `apps/backend/src/index.ts`: `app.route('/api/<name>', routes)`
-3. Add types to `packages/shared/src/types.ts`
-4. Use consistent response format: `{ success: boolean, data?: T, error?: string }`
+TanStack Start handles API routes via server routes in the file-based routing system:
+
+1. Create route file in `apps/web/src/routes/api/<name>.tsx`
+2. Use `createFileRoute` with `server.handlers` for HTTP methods
+3. Add shared types to `packages/shared/src/types.ts`
+4. Use dynamic imports for server-only modules (Prisma, auth) to prevent client bundle leaks
+
+Example:
+
+```typescript
+import { createFileRoute } from '@tanstack/react-router';
+
+export const Route = createFileRoute('/api/example')({
+  server: {
+    handlers: {
+      GET: async ({ request }: { request: Request }): Promise<Response> => {
+        return new Response(JSON.stringify({ data: 'hello' }), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      },
+    },
+  },
+});
+```
+
+### Adding Server Functions
+
+For data fetching that doesn't need a public API endpoint, use `createServerFn`:
+
+```typescript
+import { createServerFn } from '@tanstack/react-start';
+
+export const getData = createServerFn({ method: 'GET' }).handler(async () => {
+  // Server-only code here (direct DB access, etc.)
+});
+```
 
 ### Adding Frontend Routes
 
-- Create file in `apps/frontend/src/routes/` (auto-registered)
+- Create file in `apps/web/src/routes/` (auto-registered)
 - Use TanStack Query for data fetching
 - Use TanStack Form for forms
 
@@ -174,7 +204,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 ### Do
 
 - Run `docker compose up -d` before dev
-- Copy `.env.example` to `.env` in apps/backend and apps/frontend
+- Copy `.env.example` to `.env` in `apps/web/`
 - Run `pnpm type-check` before commits (pre-commit hooks run lint automatically)
 - Generate Prisma client after schema changes
 
@@ -215,16 +245,16 @@ docker compose restart postgres
 ### Running E2E Tests
 
 ```bash
-pnpm --filter frontend test:e2e           # Run all E2E tests (headless)
-pnpm --filter frontend test:e2e:headed    # Run with visible browser
-pnpm --filter frontend test:e2e:ui        # Run with Playwright UI
+pnpm --filter web test:e2e           # Run all E2E tests (headless)
+pnpm --filter web test:e2e:headed    # Run with visible browser
+pnpm --filter web test:e2e:ui        # Run with Playwright UI
 ```
 
 ### PR Screenshot Workflow
 
 When completing frontend tasks, use the Playwright MCP server to capture screenshots:
 
-1. Start the frontend dev server: `pnpm --filter frontend dev`
+1. Start the dev server: `pnpm dev`
 2. Use the MCP Playwright tools to navigate and screenshot
 3. Include screenshots in the PR description under a "Screenshots" section
 
@@ -239,6 +269,5 @@ E2E tests run automatically on every PR. Test reports are uploaded as artifacts 
 ## Resources
 
 - [TanStack Start](https://tanstack.com/start/latest)
-- [Hono](https://hono.dev/)
 - [Prisma](https://www.prisma.io/docs)
 - [Better Auth](https://www.better-auth.com/docs)

@@ -35,7 +35,7 @@ jobs:
       # Workaround for rollup native bindings not being installed from lockfile
       # See: https://github.com/pnpm/pnpm/issues/5965
       - name: Install rollup native bindings
-        run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter frontend
+        run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter web
 
       - name: Generate Prisma client
         run: pnpm --filter database db:generate
@@ -57,15 +57,15 @@ jobs:
 
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
-        working-directory: apps/frontend
+        working-directory: apps/web
 
       - name: Run E2E Tests
-        run: pnpm --filter frontend test:e2e
+        run: pnpm --filter web test:e2e
 
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
-          path: apps/frontend/playwright-report/
+          path: apps/web/playwright-report/
           retention-days: 30

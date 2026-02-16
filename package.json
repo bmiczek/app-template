@@ -2,9 +2,9 @@
   "name": "app-template",
   "version": "0.1.0",
   "private": true,
-  "description": "Modern full-stack TypeScript application with TanStack Start, Hono, Prisma, and PostgreSQL",
+  "description": "Modern full-stack TypeScript application with TanStack Start, Prisma, and PostgreSQL",
   "scripts": {
-    "dev": "pnpm --parallel --filter frontend --filter backend dev",
+    "dev": "pnpm --filter web dev",
     "build": "pnpm --recursive build",
     "test": "pnpm --recursive test",
     "lint": "eslint .",
@@ -17,7 +17,6 @@
   },
   "keywords": [
     "tanstack",
-    "hono",
     "prisma",
     "postgresql",
     "typescript",

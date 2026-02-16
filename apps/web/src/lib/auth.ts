@@ -10,16 +10,11 @@ const SESSION_EXPIRES_IN = parseInt(process.env.SESSION_EXPIRES_IN ?? '', 10) ||
 const SESSION_UPDATE_AGE = parseInt(process.env.SESSION_UPDATE_AGE ?? '', 10) || 60 * 60 * 24; // 1 day default
 
 /**
- * Better Auth instance configured with Prisma adapter and email/password authentication.
+ * Better Auth instance with Prisma adapter and email/password authentication.
  *
- * Environment variables required:
- * - BETTER_AUTH_SECRET: Secret key for signing tokens (min 32 chars)
- * - BETTER_AUTH_URL: Base URL of the backend server
- * - DATABASE_URL: PostgreSQL connection string
- *
- * Optional environment variables:
- * - SESSION_EXPIRES_IN: Session expiry in seconds (default: 7 days)
- * - SESSION_UPDATE_AGE: Session update age in seconds (default: 1 day)
+ * This module is server-only. It is dynamically imported inside
+ * createServerFn handlers and server routes to prevent Prisma
+ * from leaking into the client bundle.
  */
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
@@ -41,8 +36,5 @@ export const auth = betterAuth({
   },
 });
 
-/**
- * Inferred types from Better Auth for type-safe usage across the application.
- */
 export type AuthSession = typeof auth.$Infer.Session.session;
 export type AuthUser = typeof auth.$Infer.Session.user;

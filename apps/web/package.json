@@ -1,8 +1,8 @@
 {
-  "name": "@app-template/frontend",
+  "name": "@app-template/web",
   "version": "0.1.0",
   "private": true,
-  "description": "TanStack Start frontend application",
+  "description": "TanStack Start web application",
   "type": "module",
   "scripts": {
     "dev": "vite dev",

@@ -2,9 +2,8 @@ import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
 import { createAuthClient } from 'better-auth/react';
 
-export const authClient = createAuthClient({
-  baseURL: (import.meta.env.VITE_API_URL as string | undefined) || 'http://localhost:3001',
-});
+// Same-origin — auth API routes are served by this TanStack Start app
+export const authClient = createAuthClient();
 
 /**
  * Server function to check auth session during SSR.

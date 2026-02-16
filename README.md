@@ -1,10 +1,10 @@
 # App Template
 
-Full-stack TypeScript monorepo with TanStack Start, Hono, Prisma, and PostgreSQL.
+Full-stack TypeScript monorepo with TanStack Start, Prisma, and PostgreSQL.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -18,60 +18,52 @@ Full-stack TypeScript monorepo with TanStack Start, Hono, Prisma, and PostgreSQL
 # 1. Install dependencies
 pnpm install
 
-# 2. Set up environment files
-cp apps/backend/.env.example apps/backend/.env
-cp apps/frontend/.env.example apps/frontend/.env
+# 2. Set up environment file
+cp apps/web/.env.example apps/web/.env
 
 # 3. Start PostgreSQL
 docker compose up -d
 
-# 4. Start development servers
+# 4. Start development server
 pnpm dev
 ```
 
-**Ports:** Frontend: 3000 | Backend: 3001
-
-### Verify Installation
-
-- Frontend: http://localhost:3000
-- Backend health: http://localhost:3001/health
-- Backend API: http://localhost:3001/api
+**App:** http://localhost:3000
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 apps/
-  frontend/           # TanStack Start (React 19, SSR)
-    src/routes/       # File-based routing
-  backend/            # Hono API server
-    src/routes/       # API routes
+  web/                # TanStack Start (React 19, SSR, server routes)
+    src/routes/       # File-based routing (pages + API routes)
+    src/lib/          # Auth, utilities
 packages/
   database/           # Prisma ORM
-  shared/             # Shared types
+  shared/             # Shared types & constants
 ```
 
 ---
 
-## 📚 Documentation
+## Documentation
 
-| Document                                                    | Purpose                                          |
-| ----------------------------------------------------------- | ------------------------------------------------ |
-| [CLAUDE.md](CLAUDE.md)                                      | AI agent guide - commands, patterns, conventions |
-| [development-roadmap.md](docs/plans/development-roadmap.md) | Task priorities and progress                     |
+| Document               | Purpose                                          |
+| ---------------------- | ------------------------------------------------ |
+| [CLAUDE.md](CLAUDE.md) | AI agent guide - commands, patterns, conventions |
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-**Frontend:** TanStack Start, TanStack Query/Router/Form, React 19, TypeScript
-**Backend:** Hono, Prisma, PostgreSQL, Better Auth
+**App:** TanStack Start, TanStack Query/Router/Form, React 19, TypeScript
+**Auth:** Better Auth (email/password)
+**Database:** Prisma, PostgreSQL
 **Infrastructure:** Docker Compose, pnpm workspaces
 
 ---
 
-## 🐛 Common Issues
+## Common Issues
 
 **Port in use:**
 
@@ -94,6 +86,6 @@ docker compose restart postgres
 
 ---
 
-## 📄 License
+## License
 
 MIT

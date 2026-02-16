@@ -63,7 +63,7 @@ export default tseslint.config(
 
   // React-specific rules for frontend
   {
-    files: ['apps/frontend/**/*.tsx', 'apps/frontend/**/*.ts'],
+    files: ['apps/web/**/*.tsx', 'apps/web/**/*.ts'],
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
@@ -88,20 +88,6 @@ export default tseslint.config(
       // React 19 with new JSX transform doesn't need React in scope
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off', // Using TypeScript for prop validation
-    },
-  },
-
-  // Backend-specific rules (Node.js environment)
-  {
-    files: ['apps/backend/**/*.ts'],
-    languageOptions: {
-      globals: {
-        ...globals.node,
-      },
-    },
-    rules: {
-      // Allow console in backend
-      'no-console': 'off',
     },
   },
 
