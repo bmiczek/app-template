@@ -41,7 +41,6 @@ apps/
     src/lib/          # Auth, utilities
 packages/
   database/           # Prisma ORM
-  shared/             # Shared types & constants
 ```
 
 ---

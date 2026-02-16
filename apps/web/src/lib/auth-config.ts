@@ -9,7 +9,7 @@ export const AUTH_SECRET_MIN_LENGTH = 32;
 
 /**
  * Validates that required auth environment variables are present and valid.
- * Call at startup in both backend and frontend SSR auth modules.
+ * Call at startup in the auth module.
  * Throws with a descriptive message on failure.
  */
 export function validateAuthEnv(): void {
@@ -30,8 +30,7 @@ export function validateAuthEnv(): void {
 
 /**
  * Returns whether secure cookies should be used.
- * Must match between backend and frontend auth instances so both
- * resolve the same cookie name (e.g. `__Secure-` prefix in production).
+ * Enables `__Secure-` cookie prefix in production.
  */
 export function getSecureCookies(): boolean {
   return process.env.NODE_ENV === 'production';

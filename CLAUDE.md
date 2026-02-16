@@ -58,13 +58,11 @@ apps/
     src/lib/        # Auth, utilities
 packages/
   database/         # Prisma schema + client
-  shared/           # Shared types & constants
 ```
 
 **Key files:**
 
 - Prisma schema: `packages/database/prisma/schema.prisma`
-- Shared types: `packages/shared/src/types.ts`
 - Auth config: `apps/web/src/lib/auth.ts`
 - Auth client: `apps/web/src/lib/auth-client.ts`
 - Auth API route: `apps/web/src/routes/api/auth/$.tsx`
@@ -88,7 +86,7 @@ packages/
 **ALWAYS use plan mode when:**
 
 - Adding or modifying features (even "simple" ones like buttons or forms)
-- Making changes that touch multiple packages (web + shared + database)
+- Making changes that touch multiple packages (web + database)
 - Working with database schema changes
 - Implementing authentication or authorization logic
 - Adding new server routes or API endpoints
@@ -107,7 +105,6 @@ packages/
 ### Core Principles (IMPORTANT!)
 
 - Prefer idiomatic solutions over hacky workarounds
-- Put shared types in `packages/shared`
 - Use Prisma from `@app-template/database`
 - Ask before major architectural decisions
 - Read existing code patterns before adding new code
@@ -139,8 +136,7 @@ TanStack Start handles API routes via server routes in the file-based routing sy
 
 1. Create route file in `apps/web/src/routes/api/<name>.tsx`
 2. Use `createFileRoute` with `server.handlers` for HTTP methods
-3. Add shared types to `packages/shared/src/types.ts`
-4. Use dynamic imports for server-only modules (Prisma, auth) to prevent client bundle leaks
+3. Use dynamic imports for server-only modules (Prisma, auth) to prevent client bundle leaks
 
 Example:
 

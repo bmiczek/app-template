@@ -1,8 +1,8 @@
-import { AUTH_PASSWORD } from '@app-template/shared';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { authClient } from '../lib/auth-client';
+import { AUTH_PASSWORD } from '../lib/auth-config';
 
 interface LoginSearch {
   redirect?: string;

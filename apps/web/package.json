@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@app-template/database": "workspace:*",
-    "@app-template/shared": "workspace:*",
     "@tanstack/react-query": "^5.62.8",
     "@tanstack/react-router": "1.144.0",
     "@tanstack/react-start": "1.144.0",

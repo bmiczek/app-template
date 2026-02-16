@@ -109,11 +109,6 @@ export default tseslint.config(
     },
   },
 
-  // Shared package rules
-  {
-    files: ['packages/shared/**/*.ts'],
-  },
-
   // Config files (vite, playwright, etc.)
   {
     files: ['**/*.config.ts', '**/*.config.mjs', '**/vite.config.ts'],

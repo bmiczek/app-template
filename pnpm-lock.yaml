@@ -53,9 +53,6 @@ importers:
       '@app-template/database':
         specifier: workspace:*
         version: link:../../packages/database
-      '@app-template/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       '@tanstack/react-query':
         specifier: ^5.62.8
         version: 5.90.16(react@19.2.3)
@@ -130,12 +127,6 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.21.0
-      typescript:
-        specifier: ^5.7.2
-        version: 5.9.3
-
-  packages/shared:
-    devDependencies:
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
