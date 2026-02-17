@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
-import { useState } from 'react';
 import { authClient } from '../lib/auth-client';
-import { AUTH_PASSWORD } from '../lib/auth-config';
+import { FormErrorBanner, FormField, SubmitButton } from '../lib/forms/form-components';
+import { useAuthForm } from '../lib/forms/use-auth-form';
+import { loginSchema } from '../lib/schemas/auth';
 
 interface LoginSearch {
   redirect?: string;
@@ -18,80 +19,69 @@ export const Route = createFileRoute('/login')({
 function LoginComponent(): ReactElement {
   const navigate = useNavigate();
   const { redirect } = Route.useSearch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  function validate(): string | null {
-    if (!email || !password) return 'Email and password are required.';
-    if (password.length < AUTH_PASSWORD.MIN_LENGTH || password.length > AUTH_PASSWORD.MAX_LENGTH) {
-      return `Password must be between ${AUTH_PASSWORD.MIN_LENGTH} and ${AUTH_PASSWORD.MAX_LENGTH} characters.`;
-    }
-    return null;
-  }
-
-  async function handleSubmit(e: React.FormEvent): Promise<void> {
-    e.preventDefault();
-    setError('');
-
-    const validationError = validate();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    setLoading(true);
-    await authClient.signIn.email(
-      { email, password },
-      {
-        onSuccess: () => {
-          void navigate({ to: redirect || '/dashboard' });
-        },
-        onError: (ctx) => {
-          setError(ctx.error.message || 'Sign in failed.');
-          setLoading(false);
-        },
+  const form = useAuthForm({
+    defaultValues: { email: '', password: '' },
+    schema: loginSchema,
+    onSubmit: async (values) => {
+      await new Promise<void>((resolve, reject) => {
+        void authClient.signIn.email(
+          { email: values.email, password: values.password },
+          {
+            onSuccess: () => {
+              void navigate({ to: redirect || '/dashboard' });
+              resolve();
+            },
+            onError: (ctx) => {
+              reject(new Error(ctx.error.message || 'Sign in failed.'));
+            },
+          }
+        );
+      });
+    },
+    mapError: (message) => {
+      const lower = message.toLowerCase();
+      if (lower.includes('user not found') || lower.includes('invalid email')) {
+        return { fields: { email: message } };
       }
-    );
-  }
+      if (lower.includes('password')) {
+        return { fields: { password: message } };
+      }
+      return { form: message };
+    },
+  });
 
   return (
     <div style={{ maxWidth: '400px', margin: '2rem auto' }}>
       <h2>Login</h2>
-      <form onSubmit={(e) => void handleSubmit(e)}>
-        {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '0.25rem' }}>
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
-          />
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '0.25rem' }}>
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '0.5rem', boxSizing: 'border-box' }}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ width: '100%', padding: '0.5rem', cursor: loading ? 'not-allowed' : 'pointer' }}
-        >
-          {loading ? 'Signing in...' : 'Login'}
-        </button>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          void form.handleSubmit();
+        }}
+      >
+        <form.Subscribe selector={(state) => state.errorMap}>
+          {(errorMap) => <FormErrorBanner errorMap={errorMap} />}
+        </form.Subscribe>
+
+        <form.Field name="email">
+          {(field) => <FormField field={field} label="Email" type="email" />}
+        </form.Field>
+
+        <form.Field name="password">
+          {(field) => <FormField field={field} label="Password" type="password" />}
+        </form.Field>
+
+        <form.Subscribe selector={(state) => state.isSubmitting}>
+          {(isSubmitting) => (
+            <SubmitButton
+              isSubmitting={isSubmitting}
+              loadingText="Signing in..."
+              defaultText="Login"
+            />
+          )}
+        </form.Subscribe>
       </form>
       <p style={{ marginTop: '1rem' }}>
         Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
