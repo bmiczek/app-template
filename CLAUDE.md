@@ -117,6 +117,7 @@ packages/
 - Use `interface` over `type` for object shapes
 - Named function components in React (not arrow default exports)
 - Never use `any` - prefer `unknown` and narrow
+- Use `@/` path alias for cross-directory imports (e.g., `import { auth } from '@/lib/auth'`). Keep same-directory sibling imports relative (`./foo`).
 
 ### Database Changes
 

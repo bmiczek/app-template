@@ -1,6 +1,6 @@
+import { authClient } from '@/lib/auth-client';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
-import { authClient } from '../lib/auth-client';
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,

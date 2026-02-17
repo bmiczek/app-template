@@ -1,4 +1,6 @@
 /// <reference types="vite/client" />
+import { authClient } from '@/lib/auth-client';
+import type { RouterContext } from '@/router';
 import {
   HeadContent,
   Link,
@@ -8,8 +10,6 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import * as React from 'react';
-import { authClient } from '../lib/auth-client';
-import type { RouterContext } from '../router';
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({

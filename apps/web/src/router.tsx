@@ -1,6 +1,6 @@
+import { authClient } from '@/lib/auth-client';
+import { routeTree } from '@/routeTree.gen';
 import { createRouter } from '@tanstack/react-router';
-import { authClient } from './lib/auth-client';
-import { routeTree } from './routeTree.gen';
 
 export interface RouterContext {
   authClient: typeof authClient;

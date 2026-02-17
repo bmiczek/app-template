@@ -1,9 +1,9 @@
+import { authClient } from '@/lib/auth-client';
+import { FormErrorBanner, FormField, SubmitButton } from '@/lib/forms/form-components';
+import { useAuthForm } from '@/lib/forms/use-auth-form';
+import { signupSchema } from '@/lib/schemas/auth';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
-import { authClient } from '../lib/auth-client';
-import { FormErrorBanner, FormField, SubmitButton } from '../lib/forms/form-components';
-import { useAuthForm } from '../lib/forms/use-auth-form';
-import { signupSchema } from '../lib/schemas/auth';
 
 export const Route = createFileRoute('/signup')({
   component: SignupComponent,

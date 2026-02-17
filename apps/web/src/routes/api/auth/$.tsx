@@ -11,11 +11,11 @@ export const Route = createFileRoute('/api/auth/$')({
   server: {
     handlers: {
       GET: async ({ request }: { request: Request }): Promise<Response> => {
-        const { auth } = await import('../../../lib/auth');
+        const { auth } = await import('@/lib/auth');
         return auth.handler(request);
       },
       POST: async ({ request }: { request: Request }): Promise<Response> => {
-        const { auth } = await import('../../../lib/auth');
+        const { auth } = await import('@/lib/auth');
         return auth.handler(request);
       },
     },
