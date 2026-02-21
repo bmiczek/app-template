@@ -109,6 +109,7 @@ packages/
 - Ask before major architectural decisions
 - Read existing code patterns before adding new code
 - Always use Context7 MCP tools automatically when needing code generation, setup/configuration steps, library/API documentation
+- Ask any clarifying questions one by one, and always propose a recommendation
 
 ### Code Style
 
