@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { formatErrors, formatFormError } from './form-utils';
+import { formatErrors, formatFormError } from './utils';
 
 interface FieldRenderApi {
   name: string;

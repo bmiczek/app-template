@@ -1,4 +1,4 @@
-import { getAuthSession } from '@/lib/auth-client';
+import { getAuthSession } from '@/lib/auth/client';
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 

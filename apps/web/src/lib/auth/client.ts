@@ -16,7 +16,7 @@ export const authClient = createAuthClient();
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 export const getAuthSession = createServerFn({ method: 'GET' }).handler(async () => {
   // Dynamic import keeps Prisma out of the client bundle
-  const { auth } = await import('./auth');
+  const { auth } = await import('./server');
   const headers = getRequestHeaders();
   const session = await auth.api.getSession({ headers });
   return session;

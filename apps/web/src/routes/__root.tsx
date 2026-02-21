@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/lib/auth/client';
 import type { RouterContext } from '@/router';
 import {
   HeadContent,

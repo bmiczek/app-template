@@ -1,7 +1,7 @@
-import { authClient } from '@/lib/auth-client';
-import { FormErrorBanner, FormField, SubmitButton } from '@/lib/forms/form-components';
-import { useAuthForm } from '@/lib/forms/use-auth-form';
-import { loginSchema } from '@/lib/schemas/auth';
+import { authClient } from '@/lib/auth/client';
+import { useAuthForm } from '@/lib/auth/use-auth-form';
+import { loginSchema } from '@/lib/auth/schemas';
+import { FormErrorBanner, FormField, SubmitButton } from '@/lib/forms/components';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 

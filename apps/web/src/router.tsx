@@ -1,4 +1,4 @@
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/lib/auth/client';
 import { routeTree } from '@/routeTree.gen';
 import { createRouter } from '@tanstack/react-router';
 

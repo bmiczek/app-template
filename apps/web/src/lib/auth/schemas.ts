@@ -1,5 +1,5 @@
-import { AUTH_PASSWORD } from '@/lib/auth-config';
 import { z } from 'zod';
+import { AUTH_PASSWORD } from './config';
 
 export const emailSchema = z
   .string()
