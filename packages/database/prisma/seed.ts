@@ -14,8 +14,9 @@ async function main(): Promise<void> {
   await prisma.verification.deleteMany();
   await prisma.user.deleteMany();
 
-  // Hash password using Better Auth's utility
-  const hashedPassword = await hashPassword('admin123');
+  // Hash passwords using Better Auth's utility
+  const adminHash = await hashPassword('admin123');
+  const testHash = await hashPassword('TestPassword123!');
 
   // Create admin user with credential account
   const admin = await prisma.user.create({
@@ -27,15 +28,32 @@ async function main(): Promise<void> {
         create: {
           providerId: 'credential',
           accountId: 'admin@example.com',
-          password: hashedPassword,
+          password: adminHash,
         },
       },
     },
     include: { accounts: true },
   });
 
-  console.log('Created admin user:', admin.email);
-  console.log('Password: admin123');
+  // Create test user for e2e tests
+  const testUser = await prisma.user.create({
+    data: {
+      name: 'Test User',
+      email: 'test@example.com',
+      emailVerified: true,
+      accounts: {
+        create: {
+          providerId: 'credential',
+          accountId: 'test@example.com',
+          password: testHash,
+        },
+      },
+    },
+    include: { accounts: true },
+  });
+
+  console.log('Created admin user:', admin.email, '(password: admin123)');
+  console.log('Created test user:', testUser.email, '(password: TestPassword123!)');
   console.log('Seeding complete!');
 }
 
