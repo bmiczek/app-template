@@ -102,6 +102,10 @@ packages/
 
 **Only skip plan mode for:** typo fixes, single-line changes, or when user gives extremely detailed step-by-step instructions.
 
+### Keeping Specs Current
+
+Some directories contain a `SPEC.md` describing the patterns and decisions for that area of code. When you modify code in a directory that has a `SPEC.md`, review it and update if your changes affect the documented patterns. Don't update specs for routine additions (new routes, new fields) — only when patterns, architecture, or conventions change.
+
 ### Core Principles (IMPORTANT!)
 
 - Prefer idiomatic solutions over hacky workarounds
