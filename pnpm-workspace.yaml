@@ -1,6 +1,5 @@
 packages:
   - 'apps/*'
-  - 'packages/*'
 
 # Ensure platform-specific optional dependencies are installed for CI (Linux)
 supportedArchitectures:

@@ -1,4 +1,4 @@
-import { prisma } from '@app-template/database';
+import { prisma } from '@/lib/database';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { AUTH_PASSWORD, getSecureCookies, validateAuthEnv } from './config';

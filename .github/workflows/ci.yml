@@ -38,7 +38,7 @@ jobs:
         run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter web
 
       - name: Generate Prisma client
-        run: pnpm --filter database db:generate
+        run: pnpm --filter web db:generate
 
       - name: Lint
         run: pnpm lint

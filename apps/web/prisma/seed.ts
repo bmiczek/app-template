@@ -1,6 +1,6 @@
 import { hashPassword } from 'better-auth/crypto';
 import 'dotenv/config';
-import { prisma } from '../src/index';
+import { prisma } from '../src/lib/database';
 
 async function main(): Promise<void> {
   // Guard: only run in development

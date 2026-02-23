@@ -32,9 +32,9 @@ pnpm dev                                  # Run app (port 3000)
 pnpm --filter web dev                     # Explicit filter
 
 # Database
-pnpm --filter database db:migrate         # Run migrations
-pnpm --filter database db:generate        # Generate Prisma client
-pnpm --filter database db:studio          # Open Prisma Studio
+pnpm --filter web db:migrate              # Run migrations
+pnpm --filter web db:generate             # Generate Prisma client
+pnpm --filter web db:studio               # Open Prisma Studio
 
 # Build & Check
 pnpm build                                # Build all
@@ -54,17 +54,17 @@ pnpm add -w -D <package>                  # Add to root (build tools only)
 ```
 apps/
   web/              # TanStack Start (pages + API server routes)
+    prisma/         # Prisma schema, migrations, seed
     src/routes/     # File-based routing (auto-registered)
-    src/lib/        # Auth, utilities
-packages/
-  database/         # Prisma schema + client
+    src/lib/        # Auth, database, utilities
 ```
 
 **Key files:**
 
-- Prisma schema: `packages/database/prisma/schema.prisma`
-- Auth config: `apps/web/src/lib/auth.ts`
-- Auth client: `apps/web/src/lib/auth-client.ts`
+- Prisma schema: `apps/web/prisma/schema.prisma`
+- Database client: `apps/web/src/lib/database.ts`
+- Auth server: `apps/web/src/lib/auth/server.ts`
+- Auth client: `apps/web/src/lib/auth/client.ts`
 - Auth API route: `apps/web/src/routes/api/auth/$.tsx`
 - Vite config: `apps/web/vite.config.ts`
 
@@ -109,7 +109,7 @@ Some directories contain a `SPEC.md` describing the patterns and decisions for t
 ### Core Principles (IMPORTANT!)
 
 - Prefer idiomatic solutions over hacky workarounds
-- Use Prisma from `@app-template/database`
+- Use Prisma from `@/lib/database` (import in server-only code)
 - Ask before major architectural decisions
 - Read existing code patterns before adding new code
 - Always use Context7 MCP tools automatically when needing code generation, setup/configuration steps, library/API documentation
@@ -127,9 +127,9 @@ Some directories contain a `SPEC.md` describing the patterns and decisions for t
 ### Database Changes
 
 ```bash
-# 1. Edit packages/database/prisma/schema.prisma
+# 1. Edit apps/web/prisma/schema.prisma
 # 2. Run migration
-pnpm --filter database db:migrate
+pnpm --filter web db:migrate
 # 3. Commit schema + migration files
 ```
 
@@ -221,10 +221,10 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 ## Troubleshooting
 
-**"Cannot find module '@app-template/...'"**
+**Prisma client not found**
 
 ```bash
-pnpm install && pnpm --filter database db:generate
+pnpm install && pnpm --filter web db:generate
 ```
 
 **Port already in use**

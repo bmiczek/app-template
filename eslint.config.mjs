@@ -24,6 +24,8 @@ export default tseslint.config(
       '**/playwright.config.ts',
       '**/vitest.config.ts',
       '**/prisma.config.ts',
+      // Script files run via tsx (not part of TS project)
+      'apps/web/prisma/seed.ts',
     ],
   },
 
@@ -91,11 +93,11 @@ export default tseslint.config(
     },
   },
 
-  // Database package rules
+  // Database rules
   // Note: Prisma client types are generated, so some type-checking rules may
   // fail if the client hasn't been generated yet. Run `pnpm db:generate` first.
   {
-    files: ['packages/database/**/*.ts'],
+    files: ['apps/web/src/lib/database.ts'],
     languageOptions: {
       globals: {
         ...globals.node,
