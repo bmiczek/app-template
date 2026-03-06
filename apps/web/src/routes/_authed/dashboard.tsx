@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createFileRoute } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
@@ -9,27 +10,25 @@ function DashboardComponent(): ReactElement {
   const { session } = Route.useRouteContext();
 
   return (
-    <div style={{ maxWidth: '600px', margin: '2rem auto' }}>
-      <h2>Dashboard</h2>
-      <div
-        style={{
-          border: '1px solid #ccc',
-          borderRadius: '8px',
-          padding: '1.5rem',
-          marginTop: '1rem',
-        }}
-      >
-        <h3>User Info</h3>
-        <p>
-          <strong>Name:</strong> {session.user.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {session.user.email}
-        </p>
-        <p>
-          <strong>Session Expires:</strong> {new Date(session.session.expiresAt).toLocaleString()}
-        </p>
-      </div>
+    <div className="mx-auto mt-8 max-w-xl">
+      <h2 className="text-2xl font-semibold">Dashboard</h2>
+      <Card className="mt-4">
+        <CardHeader>
+          <CardTitle>User Info</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm">
+          <p>
+            <span className="font-medium">Name:</span> {session.user.name}
+          </p>
+          <p>
+            <span className="font-medium">Email:</span> {session.user.email}
+          </p>
+          <p>
+            <span className="font-medium">Session Expires:</span>{' '}
+            {new Date(session.session.expiresAt).toLocaleString()}
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }

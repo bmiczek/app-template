@@ -1,5 +1,9 @@
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { formatErrors, formatFormError } from '@/lib/forms/utils';
 import type { ReactElement } from 'react';
-import { formatErrors, formatFormError } from './utils';
 
 interface FieldRenderApi {
   name: string;
@@ -20,27 +24,20 @@ interface FormFieldProps {
 }
 
 export function FormField({ field, label, type = 'text' }: FormFieldProps): ReactElement {
+  const hasErrors = field.state.meta.errors.length > 0;
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <label htmlFor={field.name} style={{ display: 'block', marginBottom: '0.25rem' }}>
-        {label}
-      </label>
-      <input
+    <div className="mb-4 space-y-1">
+      <Label htmlFor={field.name}>{label}</Label>
+      <Input
         id={field.name}
         type={type}
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
-        style={{
-          width: '100%',
-          padding: '0.5rem',
-          boxSizing: 'border-box',
-        }}
+        aria-invalid={hasErrors}
       />
-      {field.state.meta.errors.length > 0 && (
-        <p style={{ color: 'red', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-          {formatErrors(field.state.meta.errors)}
-        </p>
+      {hasErrors && (
+        <p className="text-sm text-destructive">{formatErrors(field.state.meta.errors)}</p>
       )}
     </div>
   );
@@ -52,7 +49,11 @@ interface FormErrorBannerProps {
 
 export function FormErrorBanner({ errorMap }: FormErrorBannerProps): ReactElement | null {
   if (!errorMap.onSubmit) return null;
-  return <p style={{ color: 'red', marginBottom: '1rem' }}>{formatFormError(errorMap.onSubmit)}</p>;
+  return (
+    <Alert variant="destructive" className="mb-4">
+      <AlertDescription>{formatFormError(errorMap.onSubmit)}</AlertDescription>
+    </Alert>
+  );
 }
 
 interface SubmitButtonProps {
@@ -67,16 +68,8 @@ export function SubmitButton({
   defaultText,
 }: SubmitButtonProps): ReactElement {
   return (
-    <button
-      type="submit"
-      disabled={isSubmitting}
-      style={{
-        width: '100%',
-        padding: '0.5rem',
-        cursor: isSubmitting ? 'not-allowed' : 'pointer',
-      }}
-    >
+    <Button type="submit" disabled={isSubmitting} className="w-full">
       {isSubmitting ? loadingText : defaultText}
-    </button>
+    </Button>
   );
 }

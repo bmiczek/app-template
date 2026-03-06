@@ -1,7 +1,8 @@
+import { FormErrorBanner, FormField, SubmitButton } from '@/components/forms/components';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { authClient } from '@/lib/auth/client';
-import { useAuthForm } from '@/lib/auth/use-auth-form';
 import { loginSchema } from '@/lib/auth/schemas';
-import { FormErrorBanner, FormField, SubmitButton } from '@/lib/forms/components';
+import { useAuthForm } from '@/lib/auth/use-auth-form';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
@@ -52,40 +53,49 @@ function LoginComponent(): ReactElement {
   });
 
   return (
-    <div style={{ maxWidth: '400px', margin: '2rem auto' }}>
-      <h2>Login</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          void form.handleSubmit();
-        }}
-      >
-        <form.Subscribe selector={(state) => state.errorMap}>
-          {(errorMap) => <FormErrorBanner errorMap={errorMap} />}
-        </form.Subscribe>
+    <div className="mx-auto mt-8 max-w-sm">
+      <Card>
+        <CardHeader>
+          <CardTitle>Login</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              void form.handleSubmit();
+            }}
+          >
+            <form.Subscribe selector={(state) => state.errorMap}>
+              {(errorMap) => <FormErrorBanner errorMap={errorMap} />}
+            </form.Subscribe>
 
-        <form.Field name="email">
-          {(field) => <FormField field={field} label="Email" type="email" />}
-        </form.Field>
+            <form.Field name="email">
+              {(field) => <FormField field={field} label="Email" type="email" />}
+            </form.Field>
 
-        <form.Field name="password">
-          {(field) => <FormField field={field} label="Password" type="password" />}
-        </form.Field>
+            <form.Field name="password">
+              {(field) => <FormField field={field} label="Password" type="password" />}
+            </form.Field>
 
-        <form.Subscribe selector={(state) => state.isSubmitting}>
-          {(isSubmitting) => (
-            <SubmitButton
-              isSubmitting={isSubmitting}
-              loadingText="Signing in..."
-              defaultText="Login"
-            />
-          )}
-        </form.Subscribe>
-      </form>
-      <p style={{ marginTop: '1rem' }}>
-        Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
-      </p>
+            <form.Subscribe selector={(state) => state.isSubmitting}>
+              {(isSubmitting) => (
+                <SubmitButton
+                  isSubmitting={isSubmitting}
+                  loadingText="Signing in..."
+                  defaultText="Login"
+                />
+              )}
+            </form.Subscribe>
+          </form>
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Don&apos;t have an account?{' '}
+            <Link to="/signup" className="font-medium hover:underline">
+              Sign Up
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }

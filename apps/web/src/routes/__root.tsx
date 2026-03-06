@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
-import { authClient } from '@/lib/auth/client';
+import { NavBar } from '@/components/navbar';
 import type { RouterContext } from '@/router';
+import globalsCss from '@/styles/globals.css?url';
 import {
   HeadContent,
   Link,
@@ -29,7 +30,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         content: 'A modern full-stack TypeScript application',
       },
     ],
-    links: [{ rel: 'icon', href: '/favicon.ico' }],
+    links: [
+      { rel: 'stylesheet', href: globalsCss },
+      { rel: 'icon', href: '/favicon.ico' },
+    ],
   }),
   component: RootComponent,
   notFoundComponent: () => <NotFound />,
@@ -50,63 +54,12 @@ function RootDocument({ children }: { children: React.ReactNode }): React.ReactE
   );
 }
 
-function NavBar(): React.ReactElement {
-  const { data: session, isPending } = authClient.useSession();
-  const [isSigningOut, setIsSigningOut] = React.useState(false);
-
-  async function handleSignOut(): Promise<void> {
-    setIsSigningOut(true);
-    try {
-      await authClient.signOut();
-    } catch (error) {
-      console.error('Sign out failed:', error);
-      setIsSigningOut(false);
-    }
-  }
-
-  return (
-    <nav
-      style={{
-        padding: '1rem',
-        borderBottom: '1px solid #ccc',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <h1 style={{ margin: 0 }}>App Template</h1>
-      </Link>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        {isPending ? null : session ? (
-          <>
-            <span>{session.user.name}</span>
-            <Link to="/dashboard">Dashboard</Link>
-            <button
-              onClick={() => void handleSignOut()}
-              disabled={isSigningOut}
-              style={{ cursor: isSigningOut ? 'not-allowed' : 'pointer' }}
-            >
-              {isSigningOut ? 'Signing out...' : 'Sign Out'}
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </>
-        )}
-      </div>
-    </nav>
-  );
-}
-
 function RootComponent(): React.ReactElement {
   return (
     <>
       <div>
         <NavBar />
-        <main style={{ padding: '1rem' }}>
+        <main className="p-4">
           <Outlet />
         </main>
       </div>
@@ -117,10 +70,14 @@ function RootComponent(): React.ReactElement {
 
 function NotFound(): React.ReactElement {
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>404 - Page Not Found</h2>
-      <p>The page you&apos;re looking for doesn&apos;t exist.</p>
-      <Link to="/">Go back home</Link>
+    <div className="p-4">
+      <h2 className="text-2xl font-semibold">404 - Page Not Found</h2>
+      <p className="mt-2 text-muted-foreground">
+        The page you&apos;re looking for doesn&apos;t exist.
+      </p>
+      <Link to="/" className="mt-4 inline-block text-sm font-medium hover:underline">
+        Go back home
+      </Link>
     </div>
   );
 }
