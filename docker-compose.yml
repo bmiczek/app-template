@@ -22,6 +22,23 @@ services:
     networks:
       - app-network
 
+  prisma-studio:
+    image: node:22-alpine
+    container_name: app-template-prisma-studio
+    working_dir: /app
+    command: npx --yes prisma@7 studio --browser none --port 5555
+    ports:
+      - '5555:5555'
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/app_template
+    volumes:
+      - ./apps/web/prisma:/app/prisma
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+
 volumes:
   postgres-data:
     driver: local
