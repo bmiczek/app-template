@@ -76,31 +76,7 @@ apps/
 
 ### Before Starting
 
-1. Use TodoWrite to track multi-step tasks
-2. **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
-
-### Plan Mode (CRITICAL - Use Frequently!)
-
-**Enter plan mode for ANY non-trivial task.** This project has multiple packages with interdependencies—jumping straight to implementation often leads to mistakes.
-
-**ALWAYS use plan mode when:**
-
-- Adding or modifying features (even "simple" ones like buttons or forms)
-- Making changes that touch multiple packages (web + database)
-- Working with database schema changes
-- Implementing authentication or authorization logic
-- Adding new server routes or API endpoints
-- Refactoring existing code
-- Fixing bugs that aren't immediately obvious one-liners
-- Any task where you're unsure about the approach
-
-**In plan mode, you should:**
-
-1. Identify all files that will need changes
-2. Check for existing similar implementations to follow
-3. Use Context7 MCP tools for up-to-date library documentation
-
-**Only skip plan mode for:** typo fixes, single-line changes, or when user gives extremely detailed step-by-step instructions.
+**Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
 ### Keeping Specs Current
 
@@ -117,12 +93,9 @@ Some directories contain a `SPEC.md` describing the patterns and decisions for t
 
 ### Code Style
 
-- PascalCase for interfaces/types, camelCase for functions/variables
 - Always type function parameters and return values
-- Use `interface` over `type` for object shapes
-- Named function components in React (not arrow default exports)
-- Never use `any` - prefer `unknown` and narrow
-- Use `@/` path alias for cross-directory imports (e.g., `import { auth } from '@/lib/auth'`). Keep same-directory sibling imports relative (`./foo`).
+- Never use `any` or `unknown`
+- Use `@/` path alias for cross-directory imports (e.g., `import { auth } from '@/lib/auth'`).
 
 ### Database Changes
 
