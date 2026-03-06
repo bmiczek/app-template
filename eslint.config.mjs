@@ -1,6 +1,7 @@
 // @ts-check
 import eslint from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -26,6 +27,12 @@ export default tseslint.config(
       '**/prisma.config.ts',
       // Script files run via tsx (not part of TS project)
       'apps/web/prisma/seed.ts',
+      // shadcn/ui auto-generated components (do not hand-edit)
+      'apps/web/src/components/ui/**',
+      // TypeScript declaration files — ambient types only, no lintable code.
+      // NOTE: excluding these means ESLint's project service loses their type augmentations
+      // (e.g. VITE_* types from env.d.ts). Affected files use targeted disable comments.
+      'apps/web/src/**/*.d.ts',
     ],
   },
 
@@ -69,6 +76,7 @@ export default tseslint.config(
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
+      'jsx-a11y': jsxA11y,
     },
     languageOptions: {
       parserOptions: {
@@ -87,6 +95,7 @@ export default tseslint.config(
       ...reactPlugin.configs.flat.recommended.rules,
       ...reactPlugin.configs.flat['jsx-runtime'].rules,
       ...reactHooksPlugin.configs.recommended.rules,
+      ...jsxA11y.configs.recommended.rules,
       // React 19 with new JSX transform doesn't need React in scope
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off', // Using TypeScript for prop validation
@@ -143,6 +152,8 @@ export default tseslint.config(
       // Relaxed rules for E2E tests
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
+      // Playwright fixtures use a parameter named `use` which triggers this rule incorrectly
+      'react-hooks/rules-of-hooks': 'off',
     },
   },
 

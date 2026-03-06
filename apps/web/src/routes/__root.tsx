@@ -3,6 +3,7 @@ import { NavBar } from '@/components/navbar';
 import type { RouterContext } from '@/router';
 import globalsCss from '@/styles/globals.css?url';
 import {
+  type ErrorComponentProps,
   HeadContent,
   Link,
   Outlet,
@@ -36,6 +37,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
   }),
   component: RootComponent,
+  errorComponent: RootErrorComponent,
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
 });
@@ -65,6 +67,22 @@ function RootComponent(): React.ReactElement {
       </div>
       {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>
+  );
+}
+
+function RootErrorComponent({ error }: ErrorComponentProps): React.ReactElement {
+  return (
+    <div className="p-4">
+      <h2 className="text-2xl font-semibold text-destructive">Something went wrong</h2>
+      <p className="mt-2 text-sm text-muted-foreground">
+        An unexpected error occurred. Please try refreshing the page.
+      </p>
+      {import.meta.env.DEV && (
+        <pre className="mt-4 overflow-auto rounded bg-muted p-4 text-xs">
+          {error instanceof Error ? error.message : String(error)}
+        </pre>
+      )}
+    </div>
   );
 }
 

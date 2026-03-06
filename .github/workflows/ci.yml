@@ -11,58 +11,125 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    name: Build and Test
+  lint-typecheck:
+    name: Lint & Type Check
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        # version is read from packageManager in package.json
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-
       - name: Install dependencies
         run: pnpm install
+      - name: Generate Prisma client
+        run: pnpm --filter web db:generate
+      - name: Lint
+        run: pnpm lint
+      - name: Check formatting
+        run: pnpm format:check
+      - name: Type check
+        run: pnpm type-check
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
 
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Generate Prisma client
+        run: pnpm --filter web db:generate
+      - name: Run unit tests
+        run: pnpm test
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
       # Workaround for rollup native bindings not being installed from lockfile
       # See: https://github.com/pnpm/pnpm/issues/5965
       - name: Install rollup native bindings
         run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter web
-
       - name: Generate Prisma client
         run: pnpm --filter web db:generate
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Type check
-        run: pnpm type-check
-
       - name: Build
         run: pnpm build
 
-      - name: Test
-        run: pnpm test
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [build]
 
-      - name: Install Playwright Browsers
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: app_template_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/app_template_test
+      BETTER_AUTH_SECRET: ci-secret-key-minimum-32-characters-long-abc
+      BETTER_AUTH_URL: http://localhost:3000
+      LOG_LEVEL: warn
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      # Workaround for rollup native bindings not being installed from lockfile
+      # See: https://github.com/pnpm/pnpm/issues/5965
+      - name: Install rollup native bindings
+        run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter web
+      - name: Generate Prisma client
+        run: pnpm --filter web db:generate
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
         working-directory: apps/web
-
-      - name: Run E2E Tests
+      - name: Install Playwright system deps (cached run)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+        working-directory: apps/web
+      - name: Run E2E tests
         run: pnpm --filter web test:e2e
-
-      - name: Upload Playwright Report
+      - name: Upload Playwright report
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config as dotenvConfig } from 'dotenv';
+
+dotenvConfig({ path: '.env.test', override: false });
 
 export default defineConfig({
   globalSetup: './e2e/global-setup.ts',

@@ -6,9 +6,17 @@ export default function globalSetup(): void {
   const currentDir = dirname(fileURLToPath(import.meta.url));
   const workspaceRoot = resolve(currentDir, '../../..');
 
-  console.log('Seeding database for e2e tests...');
-  execSync('pnpm --filter database db:seed', {
+  console.log('Running migrations for e2e tests...');
+  execSync('pnpm --filter web db:migrate:deploy', {
     cwd: workspaceRoot,
     stdio: 'inherit',
+    env: { ...process.env },
+  });
+
+  console.log('Seeding database for e2e tests...');
+  execSync('pnpm --filter web db:seed', {
+    cwd: workspaceRoot,
+    stdio: 'inherit',
+    env: { ...process.env },
   });
 }

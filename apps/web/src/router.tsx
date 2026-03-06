@@ -18,6 +18,7 @@ export function getRouter() {
 
   if (!router.isServer) {
     Sentry.init({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- VITE_SENTRY_DSN is typed in env.d.ts, which ESLint's project service excludes
       dsn: import.meta.env.VITE_SENTRY_DSN,
       sendDefaultPii: false,
       integrations: [

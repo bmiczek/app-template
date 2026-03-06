@@ -13,6 +13,7 @@ export const loggingMiddleware = createMiddleware().server(async ({ request, nex
 
   try {
     const result = await next();
+    result.response.headers.set('x-request-id', requestId);
     reqLogger.info(
       { method, path, status: result.response.status, duration: Date.now() - start },
       'request completed'

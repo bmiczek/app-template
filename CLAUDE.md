@@ -213,6 +213,28 @@ docker compose logs -f postgres
 docker compose restart postgres
 ```
 
+**Docker image build**
+
+```bash
+docker build -t app .
+```
+
+- Build output is `dist/` (Vite-based TanStack Start) — not `.output/` (old Vinxi convention)
+- Server entry: `dist/server/server.js`
+- Production install uses `--ignore-scripts` to skip `husky prepare` (devDep not present in prod image)
+
+**Adding server-only npm packages (Node.js built-ins)**
+
+If a package uses Node.js built-ins (`node:*`) and must never run in the browser, add it to both:
+
+```ts
+// vite.config.ts
+ssr: { external: ['pkg-name'] },        // SSR bundle: keep as external require()
+build: { rollupOptions: { external: ['pkg-name'] } },  // client bundle: don't bundle
+```
+
+And import it with dynamic `import()` in `start.ts` (not a static top-level import) to keep it out of the client module graph.
+
 ---
 
 ## E2E Testing & PR Screenshots
