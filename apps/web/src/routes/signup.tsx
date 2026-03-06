@@ -1,7 +1,8 @@
+import { FormErrorBanner, FormField, SubmitButton } from '@/components/forms/components';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { authClient } from '@/lib/auth/client';
-import { useAuthForm } from '@/lib/auth/use-auth-form';
 import { signupSchema } from '@/lib/auth/schemas';
-import { FormErrorBanner, FormField, SubmitButton } from '@/lib/forms/components';
+import { useAuthForm } from '@/lib/auth/use-auth-form';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
@@ -41,46 +42,57 @@ function SignupComponent(): ReactElement {
   });
 
   return (
-    <div style={{ maxWidth: '400px', margin: '2rem auto' }}>
-      <h2>Sign Up</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          void form.handleSubmit();
-        }}
-      >
-        <form.Subscribe selector={(state) => state.errorMap}>
-          {(errorMap) => <FormErrorBanner errorMap={errorMap} />}
-        </form.Subscribe>
+    <div className="mx-auto mt-8 max-w-sm">
+      <Card>
+        <CardHeader>
+          <CardTitle>Sign Up</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              void form.handleSubmit();
+            }}
+          >
+            <form.Subscribe selector={(state) => state.errorMap}>
+              {(errorMap) => <FormErrorBanner errorMap={errorMap} />}
+            </form.Subscribe>
 
-        <form.Field name="name">{(field) => <FormField field={field} label="Name" />}</form.Field>
+            <form.Field name="name">
+              {(field) => <FormField field={field} label="Name" />}
+            </form.Field>
 
-        <form.Field name="email">
-          {(field) => <FormField field={field} label="Email" type="email" />}
-        </form.Field>
+            <form.Field name="email">
+              {(field) => <FormField field={field} label="Email" type="email" />}
+            </form.Field>
 
-        <form.Field name="password">
-          {(field) => <FormField field={field} label="Password" type="password" />}
-        </form.Field>
+            <form.Field name="password">
+              {(field) => <FormField field={field} label="Password" type="password" />}
+            </form.Field>
 
-        <form.Field name="confirmPassword">
-          {(field) => <FormField field={field} label="Confirm Password" type="password" />}
-        </form.Field>
+            <form.Field name="confirmPassword">
+              {(field) => <FormField field={field} label="Confirm Password" type="password" />}
+            </form.Field>
 
-        <form.Subscribe selector={(state) => state.isSubmitting}>
-          {(isSubmitting) => (
-            <SubmitButton
-              isSubmitting={isSubmitting}
-              loadingText="Creating account..."
-              defaultText="Sign Up"
-            />
-          )}
-        </form.Subscribe>
-      </form>
-      <p style={{ marginTop: '1rem' }}>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+            <form.Subscribe selector={(state) => state.isSubmitting}>
+              {(isSubmitting) => (
+                <SubmitButton
+                  isSubmitting={isSubmitting}
+                  loadingText="Creating account..."
+                  defaultText="Sign Up"
+                />
+              )}
+            </form.Subscribe>
+          </form>
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium hover:underline">
+              Login
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }
