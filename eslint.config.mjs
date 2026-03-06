@@ -111,9 +111,9 @@ export default tseslint.config(
     },
   },
 
-  // Config files (vite, playwright, etc.)
+  // Config files and Node.js entry points
   {
-    files: ['**/*.config.ts', '**/*.config.mjs', '**/vite.config.ts'],
+    files: ['**/*.config.ts', '**/*.config.mjs', '**/instrument.server.mjs'],
     languageOptions: {
       globals: {
         ...globals.node,
