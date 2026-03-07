@@ -1,9 +1,9 @@
 import { FormErrorBanner, FormField, SubmitButton } from '@/components/forms/components';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { authClient } from '@/lib/auth/client';
+import { authClient, getAuthSession } from '@/lib/auth/client';
 import { loginSchema } from '@/lib/auth/schemas';
 import { useAuthForm } from '@/lib/auth/use-auth-form';
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router';
 import type { ReactElement } from 'react';
 
 interface LoginSearch {
@@ -11,6 +11,13 @@ interface LoginSearch {
 }
 
 export const Route = createFileRoute('/login')({
+  beforeLoad: async () => {
+    const session = await getAuthSession();
+    if (session) {
+      // eslint-disable-next-line @typescript-eslint/only-throw-error -- TanStack Router redirect pattern
+      throw redirect({ to: '/dashboard' });
+    }
+  },
   validateSearch: (search: Record<string, unknown>): LoginSearch => ({
     redirect: typeof search.redirect === 'string' ? search.redirect : undefined,
   }),
