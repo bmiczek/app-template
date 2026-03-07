@@ -1,16 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth/client';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import * as React from 'react';
 
 export function NavBar(): React.ReactElement {
   const { data: session, isPending } = authClient.useSession();
   const [isSigningOut, setIsSigningOut] = React.useState(false);
+  const navigate = useNavigate();
 
   async function handleSignOut(): Promise<void> {
     setIsSigningOut(true);
     try {
       await authClient.signOut();
+      void navigate({ to: '/login' });
     } catch (error) {
       console.error('Sign out failed:', error);
       setIsSigningOut(false);

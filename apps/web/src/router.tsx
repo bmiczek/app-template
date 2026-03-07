@@ -1,11 +1,6 @@
-import { authClient } from '@/lib/auth/client';
 import { routeTree } from '@/routeTree.gen';
 import * as Sentry from '@sentry/tanstackstart-react';
 import { createRouter } from '@tanstack/react-router';
-
-export interface RouterContext {
-  authClient: typeof authClient;
-}
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function getRouter() {
@@ -13,7 +8,6 @@ export function getRouter() {
     routeTree,
     defaultPreload: 'intent',
     scrollRestoration: true,
-    context: { authClient },
   });
 
   if (!router.isServer) {

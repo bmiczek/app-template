@@ -9,6 +9,8 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   server: {
     port: 3000,
+    host: true,
+    allowedHosts: ['barts-macbook-air.local'],
   },
   ssr: {
     // pg-boss uses Node.js built-ins; keep it as an external require() in the SSR bundle
