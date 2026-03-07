@@ -18,13 +18,13 @@ There is **no barrel `index.ts`** in this directory. A barrel would re-export `s
 
 ## Module Split
 
-| File | Runs On | Role |
-|------|---------|------|
-| `server.ts` | Server only | Better Auth instance (dynamic import only) |
-| `client.ts` | Both | Auth client + `getAuthSession` server function |
-| `config.ts` | Both | Constants, env validation |
-| `schemas.ts` | Both | Zod validation schemas |
-| `use-auth-form.ts` | Browser | Form hook for auth pages |
+| File               | Runs On     | Role                                           |
+| ------------------ | ----------- | ---------------------------------------------- |
+| `server.ts`        | Server only | Better Auth instance (dynamic import only)     |
+| `client.ts`        | Both        | Auth client + `getAuthSession` server function |
+| `config.ts`        | Both        | Constants, env validation                      |
+| `schemas.ts`       | Both        | Zod validation schemas                         |
+| `use-auth-form.ts` | Browser     | Form hook for auth pages                       |
 
 ## SSR Session Pattern
 
