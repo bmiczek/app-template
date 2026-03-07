@@ -32,8 +32,7 @@ jobs:
       - name: Type check
         run: pnpm type-check
       - name: Audit dependencies
-        run: pnpm audit --audit-level=high
-        continue-on-error: true
+        run: pnpm audit --audit-level=high --prod
 
   test:
     name: Unit Tests
