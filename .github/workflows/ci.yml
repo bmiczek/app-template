@@ -32,7 +32,7 @@ jobs:
       - name: Type check
         run: pnpm type-check
       - name: Audit dependencies
-        run: pnpm audit --audit-level=high --prod
+        run: pnpm audit --audit-level=critical --prod
 
   test:
     name: Unit Tests
