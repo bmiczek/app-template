@@ -26,18 +26,6 @@ export const auth = betterAuth({
     minPasswordLength: AUTH_PASSWORD.MIN_LENGTH,
     maxPasswordLength: AUTH_PASSWORD.MAX_LENGTH,
   },
-  emailVerification: {
-    sendOnSignUp: false, // Set to true to require email verification on signup
-    sendVerificationEmail: async ({ user, url }: { user: { email: string }; url: string }) => {
-      const { sendEmail } = await import('@/lib/email');
-      const { verifyEmailHtml } = await import('@/lib/email/templates');
-      await sendEmail({
-        to: user.email,
-        subject: 'Verify your email address',
-        html: verifyEmailHtml(url),
-      });
-    },
-  },
   session: {
     expiresIn: SESSION_EXPIRES_IN,
     updateAge: SESSION_UPDATE_AGE,
