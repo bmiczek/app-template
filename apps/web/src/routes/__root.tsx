@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 import { NavBar } from '@/components/navbar';
-import type { RouterContext } from '@/router';
 import globalsCss from '@/styles/globals.css?url';
 import {
   type ErrorComponentProps,
@@ -13,7 +12,7 @@ import {
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import * as React from 'react';
 
-export const Route = createRootRouteWithContext<RouterContext>()({
+export const Route = createRootRouteWithContext()({
   head: () => ({
     meta: [
       {
