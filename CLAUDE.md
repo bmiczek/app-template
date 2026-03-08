@@ -9,6 +9,21 @@
 - **Auth**: Better Auth
 - **Infra**: Docker Compose, pnpm workspaces
 
+### Spec Documents
+
+Detailed architecture, design decisions, and component documentation live in `docs/`:
+
+| Document                                           | Scope                                                                            |
+| -------------------------------------------------- | -------------------------------------------------------------------------------- |
+| [`docs/SPEC.md`](docs/SPEC.md)                     | Project overview, goals, technology choices, architecture diagram                |
+| [`docs/auth.md`](docs/auth.md)                     | Better Auth setup, session lifecycle, route protection, validation               |
+| [`docs/database.md`](docs/database.md)             | Data model, Prisma config, migrations, seeding, pg-boss                          |
+| [`docs/routing.md`](docs/routing.md)               | File-based routing, server routes, server functions, middleware, API conventions |
+| [`docs/frontend.md`](docs/frontend.md)             | UI components, Tailwind v4 + shadcn/ui, forms, layout, state                     |
+| [`docs/infrastructure.md`](docs/infrastructure.md) | Monorepo, Docker, CI/CD, env config, observability, dev tooling                  |
+
+Read the relevant spec before working in an area. This CLAUDE.md is a quick-reference operational guide; the specs contain the full context.
+
 ### TanStack Start Version (IMPORTANT)
 
 This project uses **Vite-based TanStack Start** (v1.x with `@tanstack/react-start`), NOT the older Vinxi-based version.
@@ -80,7 +95,16 @@ apps/
 
 ### Keeping Specs Current
 
-Some directories contain a `SPEC.md` describing the patterns and decisions for that area of code. When you modify code in a directory that has a `SPEC.md`, review it and update if your changes affect the documented patterns. Don't update specs for routine additions (new routes, new fields) — only when patterns, architecture, or conventions change.
+Architecture and design documentation lives in `docs/` (see table above). When your changes affect documented patterns, architecture, or conventions, update the relevant spec:
+
+- Adding a new system (e.g., caching, OAuth provider) → update `docs/SPEC.md` technology table + the relevant area spec
+- Changing the data model (new tables, new relationships) → update `docs/database.md`
+- Adding new route patterns or middleware → update `docs/routing.md`
+- Changing auth flows or session handling → update `docs/auth.md`
+- Changing UI patterns, adding component categories → update `docs/frontend.md`
+- Changing build, CI, Docker, or env config → update `docs/infrastructure.md`
+
+Don't update specs for routine additions (new routes following existing patterns, new fields on existing models). Only update when the patterns themselves change.
 
 ### Core Principles (IMPORTANT!)
 
@@ -109,49 +133,14 @@ pnpm --filter web db:migrate
 - Use camelCase for Prisma fields, snake_case for DB columns
 - Never manually edit migration files
 
-### Adding Server Routes (API Endpoints)
+### Adding Routes & Server Functions
 
-TanStack Start handles API routes via server routes in the file-based routing system:
+See [`docs/routing.md`](docs/routing.md) for patterns, examples, and conventions. Key rules:
 
-1. Create route file in `apps/web/src/routes/api/<name>.tsx`
-2. Use `createFileRoute` with `server.handlers` for HTTP methods
-3. Use dynamic imports for server-only modules (Prisma, auth) to prevent client bundle leaks
-
-Example:
-
-```typescript
-import { createFileRoute } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/api/example')({
-  server: {
-    handlers: {
-      GET: async ({ request }: { request: Request }): Promise<Response> => {
-        return new Response(JSON.stringify({ data: 'hello' }), {
-          headers: { 'Content-Type': 'application/json' },
-        });
-      },
-    },
-  },
-});
-```
-
-### Adding Server Functions
-
-For data fetching that doesn't need a public API endpoint, use `createServerFn`:
-
-```typescript
-import { createServerFn } from '@tanstack/react-start';
-
-export const getData = createServerFn({ method: 'GET' }).handler(async () => {
-  // Server-only code here (direct DB access, etc.)
-});
-```
-
-### Adding Frontend Routes
-
-- Create file in `apps/web/src/routes/` (auto-registered)
-- Use TanStack Query for data fetching
-- Use TanStack Form for forms
+- **API routes**: `src/routes/api/<name>.tsx` with `server.handlers` — always use dynamic imports for server-only modules
+- **Server functions**: `createServerFn` for data fetching that doesn't need a public endpoint
+- **Page routes**: create file in `src/routes/` (auto-registered), use TanStack Form for forms
+- **Protected routes**: nest under `_authed/` directory to inherit auth guard
 
 ### Git Commits
 
@@ -219,21 +208,7 @@ docker compose restart postgres
 docker build -t app .
 ```
 
-- Build output is `dist/` (Vite-based TanStack Start) — not `.output/` (old Vinxi convention)
-- Server entry: `dist/server/server.js`
-- Production install uses `--ignore-scripts` to skip `husky prepare` (devDep not present in prod image)
-
-**Adding server-only npm packages (Node.js built-ins)**
-
-If a package uses Node.js built-ins (`node:*`) and must never run in the browser, add it to both:
-
-```ts
-// vite.config.ts
-ssr: { external: ['pkg-name'] },        // SSR bundle: keep as external require()
-build: { rollupOptions: { external: ['pkg-name'] } },  // client bundle: don't bundle
-```
-
-And import it with dynamic `import()` in `start.ts` (not a static top-level import) to keep it out of the client module graph.
+See [`docs/infrastructure.md`](docs/infrastructure.md) for Docker multi-stage build details, server-only package externalization, and CI/CD pipeline.
 
 ---
 
