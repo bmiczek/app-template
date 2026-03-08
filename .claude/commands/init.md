@@ -6,10 +6,10 @@ You are an app initialization assistant. This is the FIRST command a user runs a
 
 Use the AskUserQuestion tool to ask the user the following questions in a SINGLE call (all at once):
 
-1. **App Name** — "What is the name of your app?" (e.g., "Acme Dashboard", "TaskFlow", "InvoiceHub")
+1. **App Name** — "What is the name of your app?" (e.g., "PipelineHQ", "Dungeon Crawler Online", "Replit")
    - Options: Let the user type freely (use "Other" for all)
    - Header: "App name"
-   - Options (examples only): "My App", "SaaS Starter", provide 2 placeholder-style options but the user will almost certainly pick "Other"
+   - Options (examples only): "My App", "Untitled Project", provide 2 placeholder-style options but the user will almost certainly pick "Other"
 
 2. **App Description** — "Describe your app in one sentence."
    - Header: "Description"
@@ -19,7 +19,7 @@ Use the AskUserQuestion tool to ask the user the following questions in a SINGLE
    - Header: "App type"
    - Options:
      - "B2B SaaS" — "Team-based SaaS with workspaces, roles, and subscription billing"
-     - "Consumer App" — "User-facing product with profiles, social features, and notifications"
+     - "Consumer App" — "User-facing product with profiles, notifications, and personalized content"
      - "Video Game" — "Browser-based game with player accounts, leaderboards, and real-time state"
      - "Developer Tool" — "API-first platform with tokens, usage tracking, and developer docs"
 
@@ -27,10 +27,10 @@ Use the AskUserQuestion tool to ask the user the following questions in a SINGLE
 
 From the app name provided, derive ALL naming variants needed:
 
-- **displayName**: The user's exact app name (e.g., "Acme Dashboard")
-- **kebabCase**: Lowercased, spaces/special chars replaced with hyphens (e.g., "acme-dashboard")
-- **snakeCase**: Lowercased, spaces/special chars replaced with underscores (e.g., "acme_dashboard")
-- **scopedPackage**: `@{kebabCase}/web` (e.g., "@acme-dashboard/web")
+- **displayName**: The user's exact app name (e.g., "PipelineHQ")
+- **kebabCase**: Lowercased, spaces/special chars replaced with hyphens (e.g., "pipeline-hq")
+- **snakeCase**: Lowercased, spaces/special chars replaced with underscores (e.g., "pipeline_hq")
+- **scopedPackage**: `@{kebabCase}/web` (e.g., "@pipeline-hq/web")
 
 ## Step 3: Update All Repository Files
 
@@ -162,7 +162,7 @@ Based on the app type selected, update `docs/SPEC.md` to seed the Features table
 | -------- | ----- |
 | Profiles | User profiles, avatars, preferences, account settings |
 | Notifications | In-app and email notifications, digest preferences |
-| Social | Follow/friend system, activity feeds, sharing |
+| Content Feed | Personalized feed, recommendations, bookmarks, history |
 ```
 
 **Video Game:**
