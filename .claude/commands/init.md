@@ -20,7 +20,7 @@ Use the AskUserQuestion tool to ask the user the following questions in a SINGLE
    - Options:
      - "B2B SaaS" — "Team-based SaaS with workspaces, roles, and subscription billing"
      - "Consumer App" — "User-facing product with profiles, social features, and notifications"
-     - "Back Office" — "Operations dashboard for internal teams — data views, workflows, admin controls"
+     - "Video Game" — "Browser-based game with player accounts, leaderboards, and real-time state"
      - "Developer Tool" — "API-first platform with tokens, usage tracking, and developer docs"
 
 ## Step 2: Derive Naming Conventions
@@ -165,13 +165,13 @@ Based on the app type selected, update `docs/SPEC.md` to seed the Features table
 | Social | Follow/friend system, activity feeds, sharing |
 ```
 
-**Back Office:**
+**Video Game:**
 ```markdown
 | Document | Scope |
 | -------- | ----- |
-| RBAC | Role-based access control, permissions, admin hierarchy |
-| Audit Log | Action tracking, change history, compliance trail |
-| Data Import | CSV/Excel import, validation, bulk operations |
+| Game State | Real-time game loop, state synchronization, session management |
+| Leaderboards | Score tracking, rankings, seasons, achievements |
+| Matchmaking | Lobby system, player pairing, room management |
 ```
 
 **Developer Tool:**
