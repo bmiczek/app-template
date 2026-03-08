@@ -125,29 +125,73 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
 7. **`apps/web/src/routes/index.tsx`**:
    - `Welcome to App Template` → `Welcome to {displayName}`
    - `A modern full-stack TypeScript application.` → `{description}`
+   - Replace the generic `<ul>` bullet list (TanStack Start, Prisma, PostgreSQL, Better Auth) with app-type-appropriate value propositions:
+
+   **B2B SaaS:**
+   ```
+   - Workspace-based team collaboration
+   - Role-based access and permissions
+   - Subscription management and billing
+   ```
+
+   **Consumer App:**
+   ```
+   - Personalized content tailored to you
+   - Real-time notifications and updates
+   - Rich user profiles and preferences
+   ```
+
+   **Video Game:**
+   ```
+   - Real-time multiplayer gameplay
+   - Persistent leaderboards and achievements
+   - Skill-based matchmaking
+   ```
+
+   **Developer Tool:**
+   ```
+   - Powerful API with fine-grained access tokens
+   - Real-time usage metrics and dashboards
+   - Interactive API documentation and playground
+   ```
 
 8. **`apps/web/src/components/navbar.tsx`**:
    - `App Template` (the h1 text) → `{displayName}`
 
+9. **`apps/web/src/routes/_authed/dashboard.tsx`**:
+   - Update the page heading and card title to be app-type-appropriate:
+
+   **B2B SaaS:** heading → "Workspace", card title → "Account"
+   **Consumer App:** heading → "Home", card title → "Your Profile"
+   **Video Game:** heading → "Game Lobby", card title → "Player Info"
+   **Developer Tool:** heading → "Console", card title → "Account"
+
 ### 3b. Documentation Files (parallelize all of these)
 
-9. **`docs/SPEC.md`**:
-   - Replace the HTML comment `<!-- Update this section when you fork the template to describe your project's domain and goals. -->` and the generic purpose paragraph with: `{description}`
+10. **`docs/SPEC.md`**:
+    - Replace the HTML comment `<!-- Update this section when you fork the template to describe your project's domain and goals. -->` and the generic purpose paragraph with: `{description}`
 
-10. **`AGENTS.md`**:
+11. **`AGENTS.md`**:
     - In the "Project Overview" section, replace `Full-stack TypeScript monorepo:` with `{displayName} — Full-stack TypeScript monorepo:`
-
-11. **`Dockerfile`** — no changes needed (it's generic)
+    - Replace `docker build -t app .` with `docker build -t {kebabCase} .`
 
 ### 3c. Delete Template-Specific Files
 
-12. **Delete `PROGRESS.md`** — This file tracks template hardening progress and is not relevant to the new project. Use Bash `rm` to delete it.
+12. **Delete `PROGRESS.md`** — This file tracks template hardening progress and is not relevant to the new project. Use Bash `rm` to delete it. If it doesn't exist, skip silently.
 
 ### 3d. App-Type-Specific Scaffold
 
-Based on the app type selected, update `docs/SPEC.md` to seed the Features table with relevant upcoming feature suggestions, and add a brief architectural note. Do NOT create actual feature spec files yet — just populate the table as a roadmap.
+Based on the app type selected, update `docs/SPEC.md` in two ways:
+
+**A) Seed the Features table** with relevant upcoming feature suggestions. Do NOT create actual feature spec files yet — just populate the table as a roadmap.
+
+**B) Add an architectural note** under the "Key Architectural Decisions" section that describes the app-type-specific design direction.
+
+---
 
 **B2B SaaS:**
+
+Features table:
 ```markdown
 | Document | Scope |
 | -------- | ----- |
@@ -156,7 +200,18 @@ Based on the app type selected, update `docs/SPEC.md` to seed the Features table
 | Onboarding | Welcome flow, workspace setup, initial configuration |
 ```
 
+Architectural note:
+```markdown
+### Multi-tenant workspace model
+
+All domain data is scoped to a workspace. Users belong to one or more workspaces with role-based permissions (owner, admin, member). Workspace-level isolation is enforced at the query layer via Prisma middleware, ensuring no cross-tenant data leakage. Billing state is tracked per workspace.
+```
+
+---
+
 **Consumer App:**
+
+Features table:
 ```markdown
 | Document | Scope |
 | -------- | ----- |
@@ -165,7 +220,18 @@ Based on the app type selected, update `docs/SPEC.md` to seed the Features table
 | Content Feed | Personalized feed, recommendations, bookmarks, history |
 ```
 
+Architectural note:
+```markdown
+### User-centric data model
+
+All domain data radiates from the user. Profiles, preferences, and content interactions are per-user. The notification system uses pg-boss to queue and deliver both in-app and email notifications with user-controlled digest preferences. Content feeds are assembled server-side to enable personalization without client-side complexity.
+```
+
+---
+
 **Video Game:**
+
+Features table:
 ```markdown
 | Document | Scope |
 | -------- | ----- |
@@ -174,13 +240,31 @@ Based on the app type selected, update `docs/SPEC.md` to seed the Features table
 | Matchmaking | Lobby system, player pairing, room management |
 ```
 
+Architectural note:
+```markdown
+### Session-based game architecture
+
+Game sessions are short-lived server-managed state objects tied to a lobby or match. Persistent player data (stats, achievements, rankings) is stored in PostgreSQL. Leaderboards use indexed score columns for fast ranking queries. The pg-boss job queue handles async operations like end-of-match scoring, season rollovers, and achievement unlocks.
+```
+
+---
+
 **Developer Tool:**
+
+Features table:
 ```markdown
 | Document | Scope |
 | -------- | ----- |
 | API Keys | Token generation, scoping, rotation, rate limiting |
 | Usage | Metering, quota enforcement, usage dashboards |
 | Docs | Auto-generated API reference, guides, interactive playground |
+```
+
+Architectural note:
+```markdown
+### API-first with token authentication
+
+External API consumers authenticate via scoped API keys, separate from the session-based web UI auth. Each key has configurable permissions and rate limits. All API calls are metered and logged for usage tracking. The web dashboard serves as the management plane for keys, quotas, and usage analytics.
 ```
 
 ## Step 4: Verify Changes
