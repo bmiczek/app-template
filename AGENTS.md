@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**App Template** - Full-stack TypeScript monorepo:
+Full-stack TypeScript monorepo:
 
 - **App**: TanStack Start (React 19, SSR, Vite-based, server routes)
 - **Database**: PostgreSQL + Prisma
@@ -11,18 +11,18 @@
 
 ### Spec Documents
 
-Detailed architecture, design decisions, and component documentation live in `docs/`:
+Architecture, design decisions, and feature documentation live in `docs/`. **Read [`docs/SPEC.md`](docs/SPEC.md) first** - it links to all other specs.
 
 | Document                                           | Scope                                                                            |
 | -------------------------------------------------- | -------------------------------------------------------------------------------- |
-| [`docs/SPEC.md`](docs/SPEC.md)                     | Project overview, goals, technology choices, architecture diagram                |
+| [`docs/SPEC.md`](docs/SPEC.md)                     | Project overview, technology choices, architecture, links to all specs           |
 | [`docs/auth.md`](docs/auth.md)                     | Better Auth setup, session lifecycle, route protection, validation               |
 | [`docs/database.md`](docs/database.md)             | Data model, Prisma config, migrations, seeding, pg-boss                          |
 | [`docs/routing.md`](docs/routing.md)               | File-based routing, server routes, server functions, middleware, API conventions |
 | [`docs/frontend.md`](docs/frontend.md)             | UI components, Tailwind v4 + shadcn/ui, forms, layout, state                     |
 | [`docs/infrastructure.md`](docs/infrastructure.md) | Monorepo, Docker, CI/CD, env config, observability, dev tooling                  |
 
-Read the relevant spec before working in an area. This CLAUDE.md is a quick-reference operational guide; the specs contain the full context.
+Read the relevant spec before working in an area. This file is a quick-reference operational guide; the specs contain the full context.
 
 ### TanStack Start Version (IMPORTANT)
 
@@ -93,16 +93,23 @@ apps/
 
 **Validate approach**: Before implementing, verify the solution follows idiomatic patterns and best practices for the relevant technology. When in doubt, research current recommendations rather than assuming.
 
-### Keeping Specs Current
+### Spec-Driven Development
 
-Architecture and design documentation lives in `docs/` (see table above). When your changes affect documented patterns, architecture, or conventions, update the relevant spec:
+**Before building a new feature:**
 
-- Adding a new system (e.g., caching, OAuth provider) → update `docs/SPEC.md` technology table + the relevant area spec
+1. Read the relevant foundation specs (auth, database, routing, frontend) to understand existing patterns
+2. Write a feature spec in `docs/` (e.g., `docs/billing.md`) describing what the feature does and key design decisions
+3. Add the new spec to the Features table in `docs/SPEC.md`
+4. Implement the feature following the patterns documented in the foundation specs
+
+**When modifying existing systems:**
+
 - Changing the data model (new tables, new relationships) → update `docs/database.md`
 - Adding new route patterns or middleware → update `docs/routing.md`
 - Changing auth flows or session handling → update `docs/auth.md`
 - Changing UI patterns, adding component categories → update `docs/frontend.md`
 - Changing build, CI, Docker, or env config → update `docs/infrastructure.md`
+- Adding a new technology → update `docs/SPEC.md` technology table + the relevant area spec
 
 Don't update specs for routine additions (new routes following existing patterns, new fields on existing models). Only update when the patterns themselves change.
 
@@ -144,22 +151,7 @@ See [`docs/routing.md`](docs/routing.md) for patterns, examples, and conventions
 
 ### Git Commits
 
-Proactively suggest commits at milestones (features complete, bugs fixed, docs updated). **Always ask before committing.**
-
-Format:
-
-```
-<type>: <description>
-
-- Detail 1
-- Detail 2
-
-Generated with Claude Code
-
-Co-Authored-By: Claude <noreply@anthropic.com>
-```
-
-Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+Proactively suggest commits at milestones (features complete, bugs fixed, docs updated).
 
 ---
 
@@ -177,7 +169,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 - Use `db:push` in production (migrations only)
 - Edit migration files manually
 - Commit `.env` files
-- Use `any` type (use `unknown` and narrow)
+- Use `any` or `unknown` types
 
 ---
 

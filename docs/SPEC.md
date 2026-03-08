@@ -1,24 +1,10 @@
-# App Template - Project Specification
+# Project Specification
 
 ## Purpose
 
-App Template is a production-ready starter for full-stack TypeScript web applications. It provides the foundational infrastructure that every SaaS or internal tool needs - authentication, database access, background jobs, transactional email, observability, and CI/CD - so that teams can skip boilerplate and start building domain-specific features immediately.
+<!-- Update this section when you fork the template to describe your project's domain and goals. -->
 
-The template is opinionated by design: it makes technology choices up front and wires them together correctly, trading flexibility for a fast, coherent starting point.
-
-## Goals
-
-1. **Zero-to-feature in minutes.** Clone, install, `docker compose up`, `pnpm dev` - a working app with auth, database, and a deployable Docker image.
-2. **Full-stack TypeScript.** One language across client, server, database queries, validation schemas, and build tooling.
-3. **Server-side rendering with hydration.** Pages render on the server for performance and SEO, then hydrate on the client for interactivity.
-4. **Production-ready defaults.** Security headers, structured logging, error tracking, health checks, and CI pipelines are included from day one.
-5. **Extensible monorepo structure.** Start with one app; add packages or services to `apps/` as the product grows.
-
-## Non-Goals
-
-- **Not a component library.** UI components are provided only as building blocks for the auth flows and example pages.
-- **Not a deployment platform.** The template produces a Docker image and runs anywhere containers run, but does not prescribe a hosting provider.
-- **Not a multi-tenant SaaS framework.** Tenant isolation, billing, and subscription management are out of scope.
+A full-stack TypeScript web application with authentication, database access, background jobs, transactional email, observability, and CI/CD.
 
 ## Technology Choices
 
@@ -72,7 +58,9 @@ The application is a single deployable unit. The TanStack Start server handles S
 
 ## Specification Documents
 
-Each area of the system is documented in its own spec:
+### Foundation
+
+These specs describe the platform's built-in systems. They are stable and change only when the underlying infrastructure changes.
 
 | Document                            | Scope                                                                                |
 | ----------------------------------- | ------------------------------------------------------------------------------------ |
@@ -81,6 +69,19 @@ Each area of the system is documented in its own spec:
 | [Routing & API](routing.md)         | File-based routing, server routes, server functions, middleware, API patterns        |
 | [Frontend](frontend.md)             | UI component system, styling, forms, layout, client-side state                       |
 | [Infrastructure](infrastructure.md) | Monorepo structure, Docker, CI/CD, environment config, observability, dev tooling    |
+
+### Features
+
+As domain-specific features are built, each gets its own spec in this directory. Add new feature specs to the table below.
+
+<!-- Example:
+| [Billing](billing.md)               | Stripe integration, subscription plans, usage tracking, invoicing                    |
+| [Teams](teams.md)                   | Team creation, membership, roles, invitations                                        |
+-->
+
+| Document | Scope |
+| -------- | ----- |
+|          |       |
 
 ## Key Architectural Decisions
 
