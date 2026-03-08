@@ -1,30 +1,24 @@
-import { boss } from './index';
-
-interface WelcomeEmailPayload {
-  userId: string;
-  email: string;
-  name: string;
-}
+import { logger } from '@/lib/logger';
 
 /**
- * Schedules a welcome email job to be processed asynchronously.
- * Call this after user signup.
+ * Processes an expired data cleanup job.
+ * Deletes expired sessions and verification tokens from the database.
+ * Register with: await boss.schedule('cleanup-expired-data', '0 * * * *', {})
  */
-export async function scheduleWelcomeEmail(payload: WelcomeEmailPayload): Promise<void> {
-  await boss.send('send-welcome-email', payload);
-}
+export async function processCleanupExpiredData(): Promise<void> {
+  const { prisma } = await import('@/lib/database');
+  const now = new Date();
 
-/**
- * Processes a welcome email job.
- * Register with: await boss.work('send-welcome-email', processWelcomeEmail)
- */
-export async function processWelcomeEmail(job: { data: WelcomeEmailPayload }): Promise<void> {
-  const { email, name } = job.data;
-  const { sendEmail } = await import('@/lib/email');
-  const { welcomeEmailHtml } = await import('@/lib/email/templates');
-  await sendEmail({
-    to: email,
-    subject: `Welcome, ${name}!`,
-    html: welcomeEmailHtml(name),
-  });
+  const [deletedSessions, deletedVerifications] = await Promise.all([
+    prisma.session.deleteMany({ where: { expiresAt: { lt: now } } }),
+    prisma.verification.deleteMany({ where: { expiresAt: { lt: now } } }),
+  ]);
+
+  logger.info(
+    {
+      deletedSessions: deletedSessions.count,
+      deletedVerifications: deletedVerifications.count,
+    },
+    'cleanup-expired-data job complete'
+  );
 }

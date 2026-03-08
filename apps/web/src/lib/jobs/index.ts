@@ -19,8 +19,9 @@ if (env.NODE_ENV !== 'production') {
 export async function startJobWorkers(): Promise<void> {
   await boss.start();
   // Register job handlers here, for example:
-  // const { processWelcomeEmail } = await import('./example-job');
-  // await boss.work('send-welcome-email', processWelcomeEmail);
+  // const { processCleanupExpiredData } = await import('./example-job');
+  // await boss.schedule('cleanup-expired-data', '0 * * * *', {});
+  // await boss.work('cleanup-expired-data', processCleanupExpiredData);
 }
 
 export async function stopJobWorkers(): Promise<void> {
