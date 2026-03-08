@@ -18,10 +18,10 @@ Use the AskUserQuestion tool to ask the user the following questions in a SINGLE
 3. **App Type** — "What type of application are you building?"
    - Header: "App type"
    - Options:
-     - "SaaS" — "Multi-user SaaS application with accounts, billing-ready architecture"
-     - "Internal Tool" — "Internal/admin dashboard for managing data and operations"
-     - "Marketplace" — "Two-sided marketplace connecting buyers and sellers"
-     - "Content Platform" — "Content-driven app (blog, CMS, knowledge base, documentation)"
+     - "B2B SaaS" — "Team-based SaaS with workspaces, roles, and subscription billing"
+     - "Consumer App" — "User-facing product with profiles, social features, and notifications"
+     - "Back Office" — "Operations dashboard for internal teams — data views, workflows, admin controls"
+     - "Developer Tool" — "API-first platform with tokens, usage tracking, and developer docs"
 
 ## Step 2: Derive Naming Conventions
 
@@ -147,40 +147,40 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
 
 Based on the app type selected, update `docs/SPEC.md` to seed the Features table with relevant upcoming feature suggestions, and add a brief architectural note. Do NOT create actual feature spec files yet — just populate the table as a roadmap.
 
-**SaaS:**
+**B2B SaaS:**
 ```markdown
 | Document | Scope |
 | -------- | ----- |
-| Teams | Team creation, membership, roles, invitations |
+| Workspaces | Team creation, membership, roles, invitations |
 | Billing | Stripe integration, subscription plans, usage metering |
 | Onboarding | Welcome flow, workspace setup, initial configuration |
 ```
 
-**Internal Tool:**
+**Consumer App:**
 ```markdown
 | Document | Scope |
 | -------- | ----- |
-| RBAC | Role-based access control, permissions, admin roles |
+| Profiles | User profiles, avatars, preferences, account settings |
+| Notifications | In-app and email notifications, digest preferences |
+| Social | Follow/friend system, activity feeds, sharing |
+```
+
+**Back Office:**
+```markdown
+| Document | Scope |
+| -------- | ----- |
+| RBAC | Role-based access control, permissions, admin hierarchy |
 | Audit Log | Action tracking, change history, compliance trail |
 | Data Import | CSV/Excel import, validation, bulk operations |
 ```
 
-**Marketplace:**
+**Developer Tool:**
 ```markdown
 | Document | Scope |
 | -------- | ----- |
-| Listings | Product/service listings, search, categories, filters |
-| Transactions | Order flow, escrow, payment processing |
-| Reviews | Rating system, reviews, trust scores |
-```
-
-**Content Platform:**
-```markdown
-| Document | Scope |
-| -------- | ----- |
-| Content Model | Post types, categories, tags, rich text editing |
-| Publishing | Draft/review/publish workflow, scheduling |
-| Search | Full-text search, filtering, content discovery |
+| API Keys | Token generation, scoping, rotation, rate limiting |
+| Usage | Metering, quota enforcement, usage dashboards |
+| Docs | Auto-generated API reference, guides, interactive playground |
 ```
 
 ## Step 4: Verify Changes
