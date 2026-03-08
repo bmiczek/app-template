@@ -57,7 +57,7 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
 
 5. **`README.md`** — Rewrite entirely:
 
-   ```markdown
+   ````markdown
    # {displayName}
 
    {description}
@@ -90,10 +90,11 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    # 5. Start development server
    pnpm dev
    ```
+   ````
 
    **App:** http://localhost:3000
 
-   ---
+   ***
 
    ## Documentation
 
@@ -102,7 +103,7 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    | [AGENTS.md](AGENTS.md) | AI agent guide - commands, patterns, conventions |
    | [docs/](docs/)         | Architecture specs and feature documentation     |
 
-   ---
+   ***
 
    ## Tech Stack
 
@@ -111,11 +112,14 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    **Database:** Prisma, PostgreSQL
    **Infrastructure:** Docker Compose, pnpm workspaces
 
-   ---
+   ***
 
    ## License
 
    MIT
+
+   ```
+
    ```
 
 6. **`apps/web/src/routes/__root.tsx`**:
@@ -128,6 +132,7 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    - Replace the generic `<ul>` bullet list (TanStack Start, Prisma, PostgreSQL, Better Auth) with app-type-appropriate value propositions:
 
    **B2B SaaS:**
+
    ```
    - Workspace-based team collaboration
    - Role-based access and permissions
@@ -135,6 +140,7 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    ```
 
    **Consumer App:**
+
    ```
    - Personalized content tailored to you
    - Real-time notifications and updates
@@ -142,6 +148,7 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    ```
 
    **Video Game:**
+
    ```
    - Real-time multiplayer gameplay
    - Persistent leaderboards and achievements
@@ -149,6 +156,7 @@ Use the TodoWrite tool to track progress across all file updates. Parallelize in
    ```
 
    **Developer Tool:**
+
    ```
    - Powerful API with fine-grained access tokens
    - Real-time usage metrics and dashboards
@@ -192,15 +200,17 @@ Based on the app type selected, update `docs/SPEC.md` in two ways:
 **B2B SaaS:**
 
 Features table:
+
 ```markdown
-| Document | Scope |
-| -------- | ----- |
-| Workspaces | Team creation, membership, roles, invitations |
-| Billing | Stripe integration, subscription plans, usage metering |
-| Onboarding | Welcome flow, workspace setup, initial configuration |
+| Document   | Scope                                                  |
+| ---------- | ------------------------------------------------------ |
+| Workspaces | Team creation, membership, roles, invitations          |
+| Billing    | Stripe integration, subscription plans, usage metering |
+| Onboarding | Welcome flow, workspace setup, initial configuration   |
 ```
 
 Architectural note:
+
 ```markdown
 ### Multi-tenant workspace model
 
@@ -212,15 +222,17 @@ All domain data is scoped to a workspace. Users belong to one or more workspaces
 **Consumer App:**
 
 Features table:
+
 ```markdown
-| Document | Scope |
-| -------- | ----- |
-| Profiles | User profiles, avatars, preferences, account settings |
-| Notifications | In-app and email notifications, digest preferences |
-| Content Feed | Personalized feed, recommendations, bookmarks, history |
+| Document      | Scope                                                  |
+| ------------- | ------------------------------------------------------ |
+| Profiles      | User profiles, avatars, preferences, account settings  |
+| Notifications | In-app and email notifications, digest preferences     |
+| Content Feed  | Personalized feed, recommendations, bookmarks, history |
 ```
 
 Architectural note:
+
 ```markdown
 ### User-centric data model
 
@@ -232,15 +244,17 @@ All domain data radiates from the user. Profiles, preferences, and content inter
 **Video Game:**
 
 Features table:
+
 ```markdown
-| Document | Scope |
-| -------- | ----- |
-| Game State | Real-time game loop, state synchronization, session management |
-| Leaderboards | Score tracking, rankings, seasons, achievements |
-| Matchmaking | Lobby system, player pairing, room management |
+| Document     | Scope                                                          |
+| ------------ | -------------------------------------------------------------- |
+| Game State   | Real-time game loop, state synchronization, session management |
+| Leaderboards | Score tracking, rankings, seasons, achievements                |
+| Matchmaking  | Lobby system, player pairing, room management                  |
 ```
 
 Architectural note:
+
 ```markdown
 ### Session-based game architecture
 
@@ -252,15 +266,17 @@ Game sessions are short-lived server-managed state objects tied to a lobby or ma
 **Developer Tool:**
 
 Features table:
+
 ```markdown
-| Document | Scope |
-| -------- | ----- |
-| API Keys | Token generation, scoping, rotation, rate limiting |
-| Usage | Metering, quota enforcement, usage dashboards |
-| Docs | Auto-generated API reference, guides, interactive playground |
+| Document | Scope                                                        |
+| -------- | ------------------------------------------------------------ |
+| API Keys | Token generation, scoping, rotation, rate limiting           |
+| Usage    | Metering, quota enforcement, usage dashboards                |
+| Docs     | Auto-generated API reference, guides, interactive playground |
 ```
 
 Architectural note:
+
 ```markdown
 ### API-first with token authentication
 
@@ -270,6 +286,7 @@ External API consumers authenticate via scoped API keys, separate from the sessi
 ## Step 4: Verify Changes
 
 After all edits, run these commands in parallel:
+
 - `pnpm lint` — ensure no lint errors were introduced
 - `pnpm type-check` — ensure no type errors
 
