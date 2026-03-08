@@ -32,75 +32,7 @@ In production, the client is created once when the module first loads and never 
 
 ## Data Model
 
-### User
-
-The core identity record. Created during sign-up.
-
-| Field         | Type            | Purpose                              |
-| ------------- | --------------- | ------------------------------------ |
-| id            | String (cuid)   | Primary key                          |
-| name          | String          | Display name                         |
-| email         | String (unique) | Login identifier                     |
-| emailVerified | Boolean         | Whether the email has been confirmed |
-| image         | String?         | Profile image URL (optional)         |
-| createdAt     | DateTime        | Account creation timestamp           |
-| updatedAt     | DateTime        | Last modification timestamp          |
-
-**Relations:** Has many Sessions, has many Accounts. Cascade delete removes all related records when a user is deleted.
-
-### Session
-
-Represents an active login session. Created on sign-in, deleted on sign-out or expiration.
-
-| Field     | Type            | Purpose                               |
-| --------- | --------------- | ------------------------------------- |
-| id        | String (cuid)   | Primary key                           |
-| token     | String (unique) | Session token (set in cookie)         |
-| expiresAt | DateTime        | When the session becomes invalid      |
-| ipAddress | String?         | Client IP at time of sign-in          |
-| userAgent | String?         | Browser user agent at time of sign-in |
-| userId    | String (FK)     | References User                       |
-| createdAt | DateTime        | Session creation timestamp            |
-| updatedAt | DateTime        | Last refresh timestamp                |
-
-**Indexes:** `userId` for efficient session lookups by user.
-
-### Account
-
-Links a user to an authentication provider. Each user can have multiple accounts (e.g., one for email/password, one for Google OAuth).
-
-| Field                 | Type          | Purpose                                                            |
-| --------------------- | ------------- | ------------------------------------------------------------------ |
-| id                    | String (cuid) | Primary key                                                        |
-| accountId             | String        | Provider-specific identifier (e.g., email address for credentials) |
-| providerId            | String        | Auth provider name (`credential`, `google`, etc.)                  |
-| userId                | String (FK)   | References User                                                    |
-| password              | String?       | Hashed password (only for `credential` provider)                   |
-| accessToken           | String?       | OAuth access token                                                 |
-| refreshToken          | String?       | OAuth refresh token                                                |
-| idToken               | String?       | OpenID Connect ID token                                            |
-| accessTokenExpiresAt  | DateTime?     | OAuth token expiry                                                 |
-| refreshTokenExpiresAt | DateTime?     | Refresh token expiry                                               |
-| scope                 | String?       | OAuth scopes granted                                               |
-| createdAt             | DateTime      | Record creation timestamp                                          |
-| updatedAt             | DateTime      | Last modification timestamp                                        |
-
-**Indexes:** `userId` for efficient account lookups by user.
-
-### Verification
-
-Time-limited tokens for email verification, password reset, and similar flows.
-
-| Field      | Type          | Purpose                                      |
-| ---------- | ------------- | -------------------------------------------- |
-| id         | String (cuid) | Primary key                                  |
-| identifier | String        | What is being verified (e.g., email address) |
-| value      | String        | The verification token                       |
-| expiresAt  | DateTime      | Token expiry                                 |
-| createdAt  | DateTime      | Token creation timestamp                     |
-| updatedAt  | DateTime      | Last modification timestamp                  |
-
-**Indexes:** `identifier` for lookup by verification subject.
+All models are defined in `apps/web/prisma/schema.prisma` — this is the single source of truth. Read the schema directly for current fields, types, relations, and indexes.
 
 ## Naming Conventions
 
