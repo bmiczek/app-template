@@ -1,4 +1,4 @@
-# CLAUDE.md - AI Agent Guide
+# AGENTS.md - AI Agent Guide
 
 ## Project Overview
 
