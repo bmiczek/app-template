@@ -4,6 +4,18 @@ Full-stack TypeScript monorepo with TanStack Start, Prisma, and PostgreSQL.
 
 ---
 
+## > First: Initialize Your App
+
+**If you just forked or copied this template, run this in Claude Code before anything else:**
+
+```
+/init
+```
+
+This command will ask you a few questions about your project and rename everything — packages, database, config files, and the README — to match your app. It takes about a minute and sets up a solid foundation for your specific project type (SaaS, consumer app, game, or developer tool).
+
+---
+
 ## Quick Start
 
 ### Prerequisites
