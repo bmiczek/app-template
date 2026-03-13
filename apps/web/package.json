@@ -30,7 +30,7 @@
     "@prisma/client": "^7.0.0",
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-slot": "^1.2.4",
-    "@sentry/tanstackstart-react": "^10.42.0",
+    "@sentry/tanstackstart-react": "^10.43.0",
     "@tanstack/react-form": "^1.28.4",
     "@tanstack/react-query": "^5.90.21",
     "@tanstack/react-router": "1.166.2",
