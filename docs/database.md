@@ -32,7 +32,7 @@ In production, the client is created once when the module first loads and never 
 
 ## Data Model
 
-All models are defined in `apps/web/prisma/schema.prisma` — this is the single source of truth. Read the schema directly for current fields, types, relations, and indexes.
+All models are defined in `packages/database/prisma/schema.prisma` — this is the single source of truth. Read the schema directly for current fields, types, relations, and indexes.
 
 ## Naming Conventions
 
@@ -43,7 +43,7 @@ All models are defined in `apps/web/prisma/schema.prisma` — this is the single
 
 ## Migration Strategy
 
-Migrations are managed by Prisma Migrate and stored as SQL files in `prisma/migrations/`. The workflow:
+Migrations are managed by Prisma Migrate and stored as SQL files in `packages/database/prisma/migrations/`. The workflow:
 
 1. Edit `schema.prisma`
 2. Run `pnpm --filter web db:migrate` to generate and apply a migration
@@ -55,12 +55,12 @@ The initial migration (`20260101210059_init_better_auth_models`) creates all fou
 
 ## Seeding
 
-The seed script (`prisma/seed.ts`) creates test data for development and E2E testing:
+The seed script (`packages/database/prisma/seed.ts`) creates test data for development and E2E testing:
 
 - **Admin user** - `admin@example.com` with a known password
 - **Test user** - `test@example.com` for automated tests
 
-The seed is guarded against running in production. It clears existing data before inserting, making it idempotent. Passwords are hashed using Better Auth's `hashPassword` utility to ensure compatibility with the auth system.
+The seed is guarded against running in production. It clears existing data before inserting, making it idempotent. Passwords are hashed using the same scrypt parameters as Better Auth (N=16384, r=16, p=1) to ensure compatibility with the auth system.
 
 Run with: `pnpm --filter web db:seed`
 

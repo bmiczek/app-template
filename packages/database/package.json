@@ -12,7 +12,8 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",
@@ -21,7 +22,6 @@
   },
   "devDependencies": {
     "@types/pg": "^8.11.10",
-    "better-auth": "^1.5.4",
     "dotenv": "^16.4.7",
     "prisma": "^7.0.0",
     "tsx": "^4.19.2",

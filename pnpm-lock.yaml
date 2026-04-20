@@ -193,9 +193,6 @@ importers:
       '@types/pg':
         specifier: ^8.11.10
         version: 8.16.0
-      better-auth:
-        specifier: ^1.5.4
-        version: 1.5.4(q5j4ighwsivo5ted5enluxffca)
       dotenv:
         specifier: ^16.4.7
         version: 16.6.1

@@ -1,24 +1,36 @@
-import { hashPassword } from 'better-auth/crypto';
+import { ScryptOptions, randomBytes, scrypt } from 'node:crypto';
+
 import 'dotenv/config';
 import { prisma } from '../src/index';
 
+const SALT_BYTES = 16;
+const KEY_LENGTH = 64;
+const SCRYPT_OPTIONS: ScryptOptions = { cost: 16384, blockSize: 16, parallelization: 1 };
+
+async function hashPassword(password: string): Promise<string> {
+  const salt = randomBytes(SALT_BYTES).toString('hex');
+  const key = await new Promise<Buffer>((resolve, reject) =>
+    scrypt(password, salt, KEY_LENGTH, SCRYPT_OPTIONS, (err, derivedKey) =>
+      err ? reject(err) : resolve(derivedKey)
+    )
+  );
+  return `${salt}:${key.toString('hex')}`;
+}
+
 async function main(): Promise<void> {
-  // Guard: only run in development
   if (process.env.NODE_ENV === 'production') {
     throw new Error('Seeding is not allowed in production');
   }
 
   console.log('Seeding database...');
 
-  // Clear existing data (cascade deletes sessions/accounts)
-  await prisma.verification.deleteMany();
-  await prisma.user.deleteMany();
+  await Promise.all([prisma.verification.deleteMany(), prisma.user.deleteMany()]);
 
-  // Hash passwords using Better Auth's utility
-  const adminHash = await hashPassword('admin123');
-  const testHash = await hashPassword('TestPassword123!');
+  const [adminHash, testHash] = await Promise.all([
+    hashPassword('admin123'),
+    hashPassword('TestPassword123!'),
+  ]);
 
-  // Create admin user with credential account
   const admin = await prisma.user.create({
     data: {
       name: 'Admin User',
@@ -35,7 +47,6 @@ async function main(): Promise<void> {
     include: { accounts: true },
   });
 
-  // Create test user for e2e tests
   const testUser = await prisma.user.create({
     data: {
       name: 'Test User',

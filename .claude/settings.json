@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .claude/scripts/type-check-modified.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
