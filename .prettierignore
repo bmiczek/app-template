@@ -11,7 +11,7 @@ build/
 routeTree.gen.ts
 
 # Prisma migrations
-apps/web/prisma/migrations/
+packages/database/prisma/migrations/
 
 # Lock files
 pnpm-lock.yaml
