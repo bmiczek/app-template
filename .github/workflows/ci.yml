@@ -115,11 +115,6 @@ jobs:
         run: pnpm install
       - name: Generate Prisma client
         run: pnpm --filter web db:generate
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: web-build
-          path: apps/web/dist/
       - name: Cache Playwright browsers
         uses: actions/cache@v5
         id: playwright-cache
