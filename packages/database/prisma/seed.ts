@@ -5,7 +5,7 @@ import { prisma } from '../src/index';
 
 const SALT_BYTES = 16;
 const KEY_LENGTH = 64;
-const SCRYPT_OPTIONS: ScryptOptions = { cost: 16384, blockSize: 16, parallelization: 1 };
+const SCRYPT_OPTIONS: ScryptOptions = { cost: 16384, blockSize: 8, parallelization: 1 };
 
 async function hashPassword(password: string): Promise<string> {
   const salt = randomBytes(SALT_BYTES).toString('hex');
