@@ -113,12 +113,6 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      # Workaround for rollup native bindings not being installed from lockfile
-      # See: https://github.com/pnpm/pnpm/issues/5965
-      - name: Install rollup native bindings
-        run: pnpm add -D @rollup/rollup-linux-x64-gnu --filter web
-      - name: Generate Prisma client
-        run: pnpm --filter web db:generate
       - name: Cache Playwright browsers
         uses: actions/cache@v5
         id: playwright-cache
@@ -129,6 +123,8 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
         working-directory: apps/web
+      - name: Generate Prisma client
+        run: pnpm --filter web db:generate
       - name: Run E2E tests
         run: pnpm --filter web test:e2e
       - name: Upload Playwright report
