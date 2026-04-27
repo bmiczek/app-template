@@ -1,21 +1,6 @@
-import { ScryptOptions, randomBytes, scrypt } from 'node:crypto';
-
+import { hashPassword } from 'better-auth/crypto';
 import 'dotenv/config';
 import { prisma } from '../src/index';
-
-const SALT_BYTES = 16;
-const KEY_LENGTH = 64;
-const SCRYPT_OPTIONS: ScryptOptions = { cost: 16384, blockSize: 16, parallelization: 1 };
-
-async function hashPassword(password: string): Promise<string> {
-  const salt = randomBytes(SALT_BYTES).toString('hex');
-  const key = await new Promise<Buffer>((resolve, reject) =>
-    scrypt(password, salt, KEY_LENGTH, SCRYPT_OPTIONS, (err, derivedKey) =>
-      err ? reject(err) : resolve(derivedKey)
-    )
-  );
-  return `${salt}:${key.toString('hex')}`;
-}
 
 async function main(): Promise<void> {
   if (process.env.NODE_ENV === 'production') {
