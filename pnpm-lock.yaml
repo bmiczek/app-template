@@ -198,7 +198,7 @@ importers:
         version: 8.16.0
       better-auth:
         specifier: ^1.5.4
-        version: 1.5.4(q5j4ighwsivo5ted5enluxffca)
+        version: 1.5.4(hoiq65b6fcvh53achfetk3yqia)
       dotenv:
         specifier: ^16.4.7
         version: 16.6.1
