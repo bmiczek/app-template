@@ -196,6 +196,9 @@ importers:
       '@types/pg':
         specifier: ^8.11.10
         version: 8.16.0
+      better-auth:
+        specifier: ^1.5.4
+        version: 1.5.4(q5j4ighwsivo5ted5enluxffca)
       dotenv:
         specifier: ^16.4.7
         version: 16.6.1
@@ -1411,7 +1414,6 @@ packages:
 
   '@rollup/rollup-linux-x64-gnu@4.60.2':
     resolution: {integrity: sha512-UQjrkIdWrKI626Du8lCQ6MJp/6V1LAo2bOK9OTu4mSn8GGXIkPXk/Vsp4bLHCd9Z9Iz2OTEaokUE90VweJgIYQ==}
-    cpu: [x64]
     os: [linux]
 
   '@rollup/rollup-linux-x64-musl@4.54.0':
